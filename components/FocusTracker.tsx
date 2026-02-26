@@ -2,26 +2,14 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, RotateCcw, Zap, Brain, Star, Clock, Trophy } from "lucide-react";
+import { Play, Pause, RotateCcw, Trophy, Brain, Star, Clock, Zap } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function FocusTracker() {
     const [timeLeft, setTimeLeft] = useState(25 * 60);
     const [isActive, setIsActive] = useState(false);
-    const [isPaused, setIsPaused] = useState(false);
     const [showReward, setShowReward] = useState(false);
     const [sessionsCompleted, setSessionsCompleted] = useState(0);
-
-    const toggleTimer = () => {
-        setIsActive(!isActive);
-        setIsPaused(false);
-    };
-
-    const resetTimer = () => {
-        setIsActive(false);
-        setIsPaused(false);
-        setTimeLeft(25 * 60);
-    };
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
@@ -33,110 +21,140 @@ export default function FocusTracker() {
         setIsActive(false);
         setSessionsCompleted((prev) => prev + 1);
         setShowReward(true);
-        setTimeout(() => setShowReward(false), 5000);
+        setTimeout(() => setShowReward(false), 6000);
+        setTimeLeft(25 * 60);
     }, []);
 
     useEffect(() => {
         let interval: NodeJS.Timeout | null = null;
-
-        if (isActive && !isPaused && timeLeft > 0) {
-            interval = setInterval(() => {
-                setTimeLeft((prev) => prev - 1);
-            }, 1000);
+        if (isActive && timeLeft > 0) {
+            interval = setInterval(() => setTimeLeft((p) => p - 1), 1000);
         } else if (timeLeft === 0) {
             handleSessionComplete();
         }
+        return () => { if (interval) clearInterval(interval); };
+    }, [isActive, timeLeft, handleSessionComplete]);
 
-        return () => {
-            if (interval) clearInterval(interval);
-        };
-    }, [isActive, isPaused, timeLeft, handleSessionComplete]);
+    // Progress percentage for the ring
+    const totalSeconds = 25 * 60;
+    const progress = ((totalSeconds - timeLeft) / totalSeconds) * 100;
+    const circumference = 2 * Math.PI * 120;
+    const strokeDashoffset = circumference - (progress / 100) * circumference;
 
     return (
-        <div className="w-full flex flex-col items-center gap-32">
+        <div className="w-full flex flex-col items-center gap-12">
 
-            <div className="flex flex-col items-center gap-16">
-                {/* Active Focus Header */}
-                <div className="flex flex-col items-center gap-6">
-                    <div className="inline-flex items-center gap-4 px-8 py-3 bg-white/5 border border-white/10 text-white rounded-full">
-                        <Zap className="w-5 h-5 text-white animate-pulse fill-white shadow-[0_0_20px_rgba(255,255,255,1)]" />
-                        <span className="text-xs font-black uppercase tracking-[0.5em]">Active Focus Session</span>
-                    </div>
+            {/* Timer Ring */}
+            <div className="relative flex items-center justify-center">
+                {/* SVG Progress Ring */}
+                <svg className="absolute -rotate-90" width="280" height="280">
+                    {/* Background ring */}
+                    <circle
+                        cx="140" cy="140" r="120"
+                        stroke="rgba(63,63,70,0.5)"
+                        strokeWidth="2"
+                        fill="none"
+                    />
+                    {/* Progress ring */}
+                    <circle
+                        cx="140" cy="140" r="120"
+                        stroke="#f97316"
+                        strokeWidth="2"
+                        fill="none"
+                        strokeDasharray={circumference}
+                        strokeDashoffset={strokeDashoffset}
+                        strokeLinecap="round"
+                        className="transition-all duration-1000"
+                        style={{ opacity: isActive ? 1 : 0.3 }}
+                    />
+                </svg>
 
-                    {/* Massive Digital Timer */}
-                    <motion.div
+                {/* Timer Display */}
+                <div className="relative w-[280px] h-[280px] rounded-full bg-zinc-900/60 border border-zinc-800 flex flex-col items-center justify-center gap-2">
+                    <motion.span
                         key={timeLeft}
-                        initial={{ opacity: 0.8, scale: 0.98 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-[15vw] md:text-[220px] font-black tabular-nums tracking-[-0.08em] text-white leading-none"
+                        className="text-7xl font-bold tabular-nums tracking-tight text-white"
                     >
                         {formatTime(timeLeft)}
-                    </motion.div>
-                </div>
-
-                {/* Magnified Control Action */}
-                <div className="flex items-center gap-12">
-                    <Button
-                        variant="primary"
-                        onClick={toggleTimer}
-                        className="group relative w-full min-w-[400px] h-32 rounded-[40px] text-xl font-black uppercase tracking-[0.5em] flex items-center justify-center gap-6 transition-all duration-700 bg-white text-black hover:bg-white hover:scale-105"
-                    >
-                        {isActive ? (
-                            <><Pause className="w-8 h-8" /> Stop Concentration</>
-                        ) : (
-                            <><Play className="w-8 h-8" /> Start Focus</>
-                        )}
-                        <div className="absolute inset-0 border border-white opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-[40px] scale-110" />
-                    </Button>
-
-                    <button
-                        onClick={resetTimer}
-                        className="w-32 h-32 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-white/20 transition-all group"
-                    >
-                        <RotateCcw className="w-8 h-8 text-white/30 group-hover:text-white transition-colors" />
-                    </button>
+                    </motion.span>
+                    <span className="text-xs font-medium uppercase tracking-widest text-zinc-500">
+                        {isActive ? "Focusing..." : timeLeft === 25 * 60 ? "Ready" : "Paused"}
+                    </span>
+                    {sessionsCompleted > 0 && (
+                        <div className="absolute bottom-8 flex items-center gap-1.5 text-xs text-orange-400/70">
+                            <Trophy className="w-3 h-3" />
+                            {sessionsCompleted} session{sessionsCompleted > 1 ? "s" : ""} today
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* Magnified Stats List */}
-            <div className="flex flex-col items-start gap-12 border-l border-white/5 pl-20 py-10">
+            {/* Controls */}
+            <div className="flex items-center gap-4">
+                <Button
+                    variant="glow"
+                    size="lg"
+                    onClick={() => setIsActive(!isActive)}
+                    className="gap-3 px-10 rounded-xl"
+                >
+                    {isActive ? <><Pause className="w-5 h-5" /> Pause</> : <><Play className="w-5 h-5" /> Start Focus</>}
+                </Button>
+                <button
+                    onClick={() => { setIsActive(false); setTimeLeft(25 * 60); }}
+                    className="p-3 rounded-xl border border-zinc-800 text-zinc-500 hover:text-white hover:border-zinc-700 transition-all"
+                >
+                    <RotateCcw className="w-5 h-5" />
+                </button>
+            </div>
+
+            {/* Stats Row */}
+            <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-3">
                 {[
                     { icon: Brain, label: "Daily Intensity", value: "High" },
                     { icon: Star, label: "Streak", value: "12 Days" },
-                    { icon: Clock, label: "Total Focus", value: "142 Hours" },
+                    { icon: Clock, label: "Total Focus", value: "142 hrs" },
                     { icon: Trophy, label: "Rank", value: "Solar Master" },
-                ].map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-10 group">
-                        <stat.icon className="w-10 h-10 text-white opacity-20 group-hover:opacity-100 transition-opacity" />
-                        <div className="flex flex-col">
-                            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 mb-2">{stat.label}</span>
-                            <span className="text-2xl font-black tracking-tight text-white">{stat.value}</span>
+                ].map(({ icon: Icon, label, value }) => (
+                    <div key={label} className="group flex flex-col gap-2 p-4 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-orange-500/30 transition-all">
+                        <div className="flex items-center gap-2">
+                            <Icon className="w-4 h-4 text-orange-400" />
+                            <span className="text-xs text-zinc-500 font-medium uppercase tracking-wider">{label}</span>
                         </div>
+                        <span className="text-lg font-bold text-white">{value}</span>
                     </div>
                 ))}
             </div>
 
+            {/* Session Complete Modal */}
             <AnimatePresence>
                 {showReward && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-3xl px-10"
+                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-2xl px-6"
                     >
-                        <div className="max-w-4xl w-full text-center space-y-16">
-                            <div className="w-32 h-32 bg-white flex items-center justify-center mx-auto">
-                                <Trophy className="w-16 h-16 text-black" />
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="max-w-sm w-full text-center space-y-6 p-8 rounded-2xl bg-zinc-900 border border-orange-500/30 shadow-orange"
+                        >
+                            <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto shadow-orange">
+                                <Trophy className="w-8 h-8 text-white" />
                             </div>
-                            <div className="space-y-4">
-                                <h3 className="text-7xl font-black uppercase italic tracking-tighter">Session Complete</h3>
-                                <p className="text-xl text-white/40 font-serif italic">Proof of Focus hashed and finalized.</p>
+                            <div>
+                                <h3 className="text-2xl font-bold text-white mb-1">Session Complete!</h3>
+                                <p className="text-zinc-400 text-sm">Proof of Focus hashed to the network.</p>
                             </div>
-                            <div className="text-[10px] font-black uppercase tracking-[1em] text-white/20">System credits initiated</div>
-                            <Button variant="primary" size="lg" className="px-32" onClick={() => setShowReward(false)}>
-                                Secure Rewards
+                            <div className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-orange-500/10 border border-orange-500/20">
+                                <Zap className="w-4 h-4 text-orange-400" />
+                                <span className="text-sm font-semibold text-orange-300">+25 $NEBULA earned</span>
+                            </div>
+                            <Button variant="glow" className="w-full" onClick={() => setShowReward(false)}>
+                                Claim Rewards
                             </Button>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>

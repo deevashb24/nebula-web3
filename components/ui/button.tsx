@@ -5,23 +5,25 @@ import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-    "inline-flex items-center justify-center rounded-none text-sm font-bold uppercase tracking-widest transition-all duration-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-400 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] gap-3",
+    "inline-flex items-center justify-center rounded-xl text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/50 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] gap-2",
     {
         variants: {
             variant: {
-                primary: "bg-white text-black hover:bg-white/90 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_50px_rgba(255,255,255,0.2)]",
-                secondary: "bg-slate-900 text-white border border-slate-800 hover:bg-slate-800",
-                glow: "bg-white text-black shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:scale-[1.02]",
-                glass: "bg-white/5 backdrop-blur-md border border-white/10 text-white hover:bg-white/10 hover:border-white/20",
-                ghost: "bg-transparent hover:bg-white/5 text-slate-400 hover:text-white border border-transparent hover:border-white/10",
-                outline: "border border-white/20 text-white bg-transparent hover:border-white/60 hover:bg-white/5",
-                white: "bg-white text-black font-black hover:bg-white/90",
+                primary: "bg-orange-500 text-white hover:bg-orange-600 shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-orange hover:scale-[1.02]",
+                secondary: "bg-zinc-800 text-white border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600",
+                glow: "bg-orange-500 text-white shadow-orange hover:bg-orange-600 hover:shadow-orange-lg hover:scale-[1.02]",
+                glass: "bg-white/[0.04] backdrop-blur-xl border border-white/10 text-white hover:bg-white/[0.08] hover:border-orange-500/30",
+                ghost: "bg-transparent hover:bg-white/[0.04] text-zinc-400 hover:text-white border border-transparent hover:border-zinc-700",
+                outline: "border border-zinc-700 text-white bg-transparent hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400",
+                white: "bg-white text-black font-bold hover:bg-zinc-100",
+                monochrome: "bg-white text-black hover:bg-zinc-100 font-semibold",
+                default: "bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800",
             },
             size: {
-                sm: "h-10 px-6 text-[10px]",
-                md: "h-14 px-10 text-xs",
-                lg: "h-20 px-16 text-sm",
-                icon: "h-12 w-12 p-0",
+                sm: "h-9 px-4 text-xs rounded-lg",
+                md: "h-11 px-6 text-sm",
+                lg: "h-12 px-8 text-base rounded-xl",
+                icon: "h-10 w-10 p-0 rounded-xl",
             }
         },
         defaultVariants: {

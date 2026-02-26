@@ -1,177 +1,145 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { MOCK_PLAYERS, MOCK_HISTORY } from '@/lib/mock-data';
-import {
-    User,
-    Settings,
-    History,
-    Award,
-    Zap,
-    Target,
-    Share2,
-    Copy,
-    ExternalLink,
-    Trophy,
-    Sword
-} from 'lucide-react';
+import Navbar from "@/components/Navbar";
+import { motion } from "framer-motion";
+import { usePrivy } from "@privy-io/react-auth";
+import { Clock, Trophy, Flame, Zap, Star, Copy, ExternalLink, Shield, Target, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+
+const recentActivity = [
+    { type: "focus", label: "90 min Deep Work", earned: "+45 $NEBULA", time: "2h ago" },
+    { type: "streak", label: "12 Day Streak Milestone", earned: "+100 $NEBULA", time: "1d ago" },
+    { type: "focus", label: "60 min Sprint", earned: "+30 $NEBULA", time: "1d ago" },
+    { type: "rank", label: "Reached Rank #142", earned: "Achievement", time: "2d ago" },
+];
+
+const achievements = [
+    { icon: Flame, label: "12-Day Streak", desc: "Focused 12 days in a row", earned: true },
+    { icon: Trophy, label: "First 100h", desc: "100 hours of verified focus", earned: true },
+    { icon: Target, label: "50 Sessions", desc: "Completed 50 focus sessions", earned: true },
+    { icon: TrendingUp, label: "Top 200", desc: "Reached global top 200", earned: true },
+    { icon: Shield, label: "Genesis Member", desc: "Early protocol adopter", earned: true },
+    { icon: Star, label: "Solar Tier", desc: "Reached Solar rank tier", earned: false },
+];
 
 export default function ProfilePage() {
-    const player = MOCK_PLAYERS[0]; // Logic for logged-in user
+    const { user, authenticated } = usePrivy();
+    const [copied, setCopied] = useState(false);
+
+    const address = user?.wallet?.address || "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b";
+    const shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(address);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
     return (
-        <div className="space-y-8">
-            {/* Profile Header */}
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-8 md:p-12">
-                <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-[100px]" />
+        <div className="bg-[#09090b] min-h-screen text-white">
+            <Navbar />
 
-                <div className="relative z-10 flex flex-col items-start gap-8 md:flex-row md:items-center">
-                    <div className="relative">
-                        <div className="h-32 w-32 overflow-hidden rounded-3xl border-4 border-primary/20 bg-white/5 p-2">
-                            <img src={player.avatar} alt={player.username} className="h-full w-full rounded-2xl object-cover" />
-                        </div>
-                        <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-black shadow-lg shadow-primary/40">
-                            <Award className="h-4 w-4" />
-                        </div>
-                    </div>
-
-                    <div className="flex-1 space-y-4">
-                        <div>
-                            <div className="flex items-center gap-3">
-                                <h1 className="text-4xl font-black uppercase italic tracking-tighter text-white">{player.username}</h1>
-                                <Button variant="ghost" size="icon" className="h-8 w-8 text-white/40 hover:text-white">
-                                    <Settings className="h-4 w-4" />
-                                </Button>
-                            </div>
-                            <div className="mt-2 flex items-center gap-2">
-                                <code className="rounded bg-white/5 px-2 py-1 text-xs font-bold text-white/40">{player.address}</code>
-                                <button className="text-white/20 hover:text-white"><Copy className="h-3 w-3" /></button>
-                            </div>
-                        </div>
-
-                        <div className="flex flex-wrap gap-3">
-                            {[
-                                { label: 'Tier 1 Elite', color: 'text-primary' },
-                                { label: 'Early Adopter', color: 'text-secondary' },
-                                { label: 'Pro Duelist', color: 'text-accent' }
-                            ].map((tag, i) => (
-                                <span key={i} className={`rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-black uppercase tracking-widest ${tag.color}`}>
-                                    {tag.label}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="flex gap-3">
-                        <Button variant="primary" className="h-12 gap-2 shadow-primary/20">
-                            <Share2 className="h-4 w-4" />
-                            SHARE PROFILE
-                        </Button>
-                    </div>
-                </div>
+            {/* Cover */}
+            <div className="relative h-44 bg-gradient-to-br from-zinc-900 via-orange-950/20 to-zinc-900 border-b border-zinc-800">
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid gap-6 md:grid-cols-4">
-                {[
-                    { label: 'Total Earnings', value: '$8,420', icon: Zap, sub: '+12% this week', color: 'text-primary' },
-                    { label: 'Total Duels', value: player.wins + player.losses, icon: Target, sub: 'Rank #245', color: 'text-secondary' },
-                    { label: 'Win Rate', value: `${Math.floor((player.wins / (player.wins + player.losses)) * 100)}%`, icon: Award, sub: 'Global Average: 52%', color: 'text-primary' },
-                    { label: 'Global Rank', value: `#${player.rank}`, icon: Trophy, sub: 'Top 1% Players', color: 'text-accent' }
-                ].map((stat, i) => (
-                    <Card key={i} variant="glass" className="relative group">
-                        <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 ${stat.color} transition-transform group-hover:scale-110`}>
-                            <stat.icon className="h-5 w-5" />
+            <main className="max-w-5xl mx-auto px-6 -mt-16 pb-16">
+                {/* Profile Header */}
+                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
+                    className="flex flex-col md:flex-row gap-6 items-start mb-8">
+                    {/* Avatar */}
+                    <div className="relative flex-shrink-0">
+                        <div className="w-28 h-28 rounded-2xl border-4 border-zinc-950 overflow-hidden bg-zinc-800">
+                            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=nebula`} className="w-full h-full object-cover" alt="Avatar" />
                         </div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/40">{stat.label}</p>
-                        <h3 className="mt-1 text-2xl font-black text-white">{stat.value}</h3>
-                        <p className="mt-2 text-[10px] font-bold text-white/20">{stat.sub}</p>
-                    </Card>
-                ))}
-            </div>
+                        <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <Zap className="w-3.5 h-3.5 text-white" />
+                        </div>
+                    </div>
 
-            <div className="grid gap-8 lg:grid-cols-3">
-                {/* Battle History */}
-                <div className="lg:col-span-2">
-                    <Card variant="glass" className="p-0 border-white/5">
-                        <div className="flex items-center justify-between border-b border-white/5 p-6 md:px-8">
-                            <div className="flex items-center gap-2">
-                                <History className="h-4 w-4 text-primary" />
-                                <h2 className="text-sm font-black uppercase tracking-[0.2em] text-white/60">Battle History</h2>
+                    {/* Info */}
+                    <div className="flex-1 pt-12 md:pt-10">
+                        <div className="flex flex-wrap items-start justify-between gap-4">
+                            <div>
+                                <h1 className="text-2xl font-bold text-white">Deevash</h1>
+                                <div className="flex items-center gap-2 mt-1">
+                                    <span className="text-sm text-zinc-400 font-mono">{shortAddress}</span>
+                                    <button onClick={handleCopy} className="text-zinc-500 hover:text-orange-400 transition-colors">
+                                        <Copy className="w-3.5 h-3.5" />
+                                    </button>
+                                    {copied && <span className="text-xs text-green-400">Copied!</span>}
+                                    <a href={`https://etherscan.io/address/${address}`} target="_blank" rel="noreferrer" className="text-zinc-600 hover:text-orange-400 transition-colors">
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                    </a>
+                                </div>
                             </div>
-                            <Button variant="ghost" size="sm" className="h-8 text-[10px] font-black uppercase text-white/40 hover:text-white">
-                                View All
-                            </Button>
+                            <div className="flex gap-3">
+                                <span className="px-3 py-1 rounded-full text-xs font-semibold border border-yellow-500/30 text-yellow-400 bg-yellow-500/10">Solar Tier</span>
+                                <Button variant="outline" size="sm">Edit Profile</Button>
+                            </div>
                         </div>
+                    </div>
+                </motion.div>
 
-                        <div className="divide-y divide-white/5">
-                            {MOCK_HISTORY.map((item: any) => (
-                                <div key={item.id} className="flex items-center justify-between p-6 transition-colors hover:bg-white/[0.02] md:px-8">
-                                    <div className="flex items-center gap-6">
-                                        <div className={`flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 ${item.result === 'won' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
-                                            <Sword className="h-6 w-6" />
-                                        </div>
-                                        <div>
-                                            <div className="flex items-center gap-2">
-                                                <p className="text-sm font-black text-white uppercase">{item.gameType} Battle</p>
-                                                <span className={`text-[10px] font-black uppercase ${item.result === 'won' ? 'text-green-500' : 'text-red-500'}`}>
-                                                    {item.result}
-                                                </span>
-                                            </div>
-                                            <p className="text-[10px] font-bold text-white/40 uppercase">Vs. {item.opponent} • {new Date(item.date).toLocaleDateString()}</p>
-                                        </div>
+                {/* Stats */}
+                <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
+                    className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    {[
+                        { icon: Clock, label: "Total Focus", value: "142h" },
+                        { icon: Flame, label: "Streak", value: "12 Days" },
+                        { icon: Trophy, label: "$NEBULA Earned", value: "1,240" },
+                        { icon: Star, label: "Global Rank", value: "#142" },
+                    ].map(({ icon: Icon, label, value }) => (
+                        <div key={label} className="p-4 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-orange-500/30 transition-all text-center">
+                            <Icon className="w-5 h-5 text-orange-400 mx-auto mb-2" />
+                            <p className="text-xl font-bold text-white">{value}</p>
+                            <p className="text-xs text-zinc-500 mt-0.5">{label}</p>
+                        </div>
+                    ))}
+                </motion.div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+                    {/* Achievements */}
+                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
+                        className="md:col-span-7">
+                        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Achievements</h2>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {achievements.map(({ icon: Icon, label, desc, earned }) => (
+                                <div key={label} className={`p-4 rounded-xl border text-center transition-all ${earned ? "bg-zinc-900 border-orange-500/20 hover:border-orange-500/40" : "bg-zinc-900/40 border-zinc-800 opacity-40"}`}>
+                                    <div className={`w-9 h-9 rounded-xl mx-auto mb-2.5 flex items-center justify-center ${earned ? "bg-orange-500/15 border border-orange-500/20" : "bg-zinc-800 border border-zinc-700"}`}>
+                                        <Icon className={`w-4 h-4 ${earned ? "text-orange-400" : "text-zinc-600"}`} />
                                     </div>
-                                    <div className="text-right">
-                                        <p className={`text-sm font-black ${item.result === 'won' ? 'text-green-500' : 'text-white/60'}`}>
-                                            {item.result === 'won' ? '+' : '-'}{item.amount} {item.token}
-                                        </p>
-                                        <button className="mt-1 flex items-center gap-1 ml-auto text-[10px] font-bold text-white/20 hover:text-white">
-                                            Details <ExternalLink className="h-2.5 w-2.5" />
-                                        </button>
-                                    </div>
+                                    <p className="text-xs font-semibold text-white mb-0.5">{label}</p>
+                                    <p className="text-xs text-zinc-600 leading-tight">{desc}</p>
                                 </div>
                             ))}
                         </div>
-                    </Card>
-                </div>
+                    </motion.div>
 
-                {/* Inventory/Badges */}
-                <div className="space-y-6">
-                    <Card variant="glass">
-                        <h3 className="mb-6 text-xs font-black uppercase tracking-[0.2em] text-white/40">Earned Badges</h3>
-                        <div className="grid grid-cols-3 gap-4">
-                            {[1, 2, 3, 4, 5].map((i) => (
-                                <div key={i} className="aspect-square rounded-2xl border border-white/5 bg-white/[0.02] p-2 flex items-center justify-center grayscale hover:grayscale-0 transition-all cursor-help opacity-40 hover:opacity-100">
-                                    <Award className={`h-8 w-8 ${i === 1 ? 'text-primary' : i === 2 ? 'text-secondary' : 'text-white/20'}`} />
+                    {/* Recent Activity */}
+                    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }}
+                        className="md:col-span-5">
+                        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">Recent Activity</h2>
+                        <div className="rounded-2xl bg-zinc-900 border border-zinc-800 overflow-hidden">
+                            {recentActivity.map((a, i) => (
+                                <div key={i} className={`px-4 py-3.5 flex items-center gap-3 hover:bg-zinc-800/50 transition-colors ${i > 0 ? "border-t border-zinc-800/60" : ""}`}>
+                                    <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+                                        <Zap className="w-3.5 h-3.5 text-orange-400" />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-medium text-white truncate">{a.label}</p>
+                                        <p className="text-xs text-zinc-500">{a.time}</p>
+                                    </div>
+                                    <span className="text-xs font-semibold text-orange-400 flex-shrink-0">{a.earned}</span>
                                 </div>
                             ))}
-                            <div className="aspect-square rounded-2xl border border-dashed border-white/10 flex items-center justify-center text-[10px] font-bold text-white/20">
-                                +12
-                            </div>
                         </div>
-                        <Button variant="ghost" className="w-full mt-6 text-[10px] font-black uppercase border border-white/5">VIEW SHOWCASE</Button>
-                    </Card>
-
-                    <Card variant="glass" className="bg-gradient-to-br from-primary/10 to-transparent">
-                        <h3 className="mb-2 text-sm font-black uppercase italic tracking-tighter">REFER A FRIEND</h3>
-                        <p className="mb-6 text-[10px] font-bold text-white/60 leading-relaxed uppercase">Invite your crew and earn 5% of their battle fees for life.</p>
-                        <div className="flex gap-2">
-                            <input
-                                type="text"
-                                readOnly
-                                value="clash.x/cyberghost"
-                                className="h-10 flex-1 rounded-lg bg-black/40 border border-white/10 px-3 text-xs font-bold text-white/60 focus:outline-none"
-                            />
-                            <Button className="h-10 w-10 p-0 rounded-lg">
-                                <Copy className="h-4 w-4" />
-                            </Button>
-                        </div>
-                    </Card>
+                    </motion.div>
                 </div>
-            </div>
+            </main>
         </div>
     );
 }

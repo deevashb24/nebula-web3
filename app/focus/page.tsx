@@ -2,44 +2,47 @@
 
 import { motion } from "framer-motion";
 import FocusTracker from "@/components/FocusTracker";
+import Navbar from "@/components/Navbar";
 
 export default function FocusPage() {
     return (
-        <div className="flex flex-col items-center bg-[#050505] min-h-screen selection:bg-white selection:text-black overflow-hidden relative">
-            <main className="relative w-full max-w-[1800px] mx-auto px-10 sm:px-20 lg:px-40 flex flex-col items-center justify-center min-h-[100vh] py-60 z-10">
+        <div className="flex flex-col bg-[#09090b] min-h-screen overflow-hidden relative selection:bg-orange-500/30 selection:text-orange-200">
+            <Navbar />
+
+            {/* Ambient orange glow */}
+            <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none -z-0 opacity-30 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/30 to-transparent" />
+
+            <main className="relative w-full max-w-4xl mx-auto px-6 sm:px-12 flex flex-col items-center justify-center min-h-[calc(100vh-73px)] py-20 z-10">
 
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 24 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="flex flex-col items-center text-center w-full max-w-5xl mb-32"
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col items-center text-center w-full mb-16"
                 >
-                    {/* Grand Header */}
-                    <h1 className="text-[8vw] sm:text-[6vw] lg:text-[100px] font-black tracking-[-0.04em] leading-[0.85] text-white uppercase italic mb-12">
+                    {/* Badge */}
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 text-orange-400 text-xs font-medium mb-6">
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                        Active Focus Session
+                    </div>
+
+                    <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-3">
                         Deep Focus Chamber
                     </h1>
-
-                    {/* Highly-Readable Subtext (Serif) */}
-                    <p className="text-xl sm:text-2xl text-white/40 max-w-3xl leading-relaxed italic font-serif px-10">
-                        Disconnect from the noise and enter the chamber.
-                        Your productivity is hashed and verified in real-time.
+                    <p className="text-zinc-400 text-base max-w-xl leading-relaxed">
+                        Disconnect from the noise. Your productivity is hashed and verified in real-time.
                     </p>
                 </motion.div>
 
-                {/* Main Focus UI - Magnified Scale */}
-                <div className="w-full max-w-5xl flex flex-col items-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+                    className="w-full"
+                >
                     <FocusTracker />
-                </div>
-
+                </motion.div>
             </main>
-
-            {/* Expansive Space Branding */}
-            <div className="fixed bottom-12 left-12 opacity-5 pointer-events-none">
-                <div className="w-8 h-8 bg-white flex items-center justify-center text-black font-black text-sm">N</div>
-            </div>
-
-            {/* Ambient Depth Layer */}
-            <div className="fixed inset-0 bg-gradient-to-b from-[#050505] via-transparent to-black pointer-events-none" />
         </div>
     );
 }

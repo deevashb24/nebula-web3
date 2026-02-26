@@ -1,24 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Institutional Obsidian Palette */
-  --background: #050505;
+  --background: #09090b;
+  /* zinc-950 */
   --foreground: #ffffff;
-
-  /* Brand Accents - Subtle & Sharp */
-  --primary: #ffffff;
-  --primary-glow: rgba(255, 255, 255, 0.15);
-  --secondary: #1e293b;
-  /* Slate 800 */
-  --accent: #64748b;
-  /* Slate 500 */
-
-  /* Institutional Textures */
-  --glass-bg: rgba(255, 255, 255, 0.02);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-hover: rgba(255, 255, 255, 0.04);
+  --primary: #f97316;
+  /* orange-500 */
+  --primary-glow: rgba(249, 115, 22, 0.3);
+  --secondary: #ea580c;
+  /* orange-600 */
+  --accent: #fb923c;
+  /* orange-400 */
+  --muted: #71717a;
+  /* zinc-500 */
+  --glass-bg: rgba(24, 24, 27, 0.6);
+  /* zinc-900/60 */
+  --glass-border: rgba(63, 63, 70, 1);
+  /* zinc-700 */
+  --card-bg: #18181b;
+  /* zinc-900 */
 }
 
 * {
@@ -27,48 +33,54 @@
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Geist', 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-
-  /* Institutional Grain Texture */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 200px;
-  background-blend-mode: overlay;
-  opacity: 1;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
   min-height: 100vh;
-  width: 100vw;
-  /* Removed gradients for minimalist feel */
-  background: var(--background);
   position: relative;
 }
 
-/* Institutional Glass - Sharp & Subtle */
+/* Noise texture overlay */
+.noise-overlay {
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Glass card style */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  border-radius: 0;
-  /* Forced sharp corners */
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass:hover {
-  background: var(--glass-hover);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+  background: rgba(39, 39, 42, 0.6);
+  border-color: rgba(113, 113, 122, 0.6);
 }
 
-/* Institutional Scrollbar */
+/* Orange glow effect */
+.orange-glow {
+  box-shadow: 0 0 40px -10px rgba(234, 88, 12, 0.5);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
 }
@@ -78,17 +90,27 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(249, 115, 22, 0.2);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(249, 115, 22, 0.4);
 }
 
-/* Grid System Helper */
-.institutional-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
+/* Fade slide in animation - matching reference site */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-slide-in {
+  animation: fadeSlideIn 1s ease-out both;
 }
