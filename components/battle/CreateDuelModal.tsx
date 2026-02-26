@@ -40,7 +40,7 @@ export const CreateDuelModal = ({ isOpen, onClose }: CreateDuelModalProps) => {
                     exit={{ opacity: 0, scale: 0.9, y: 20 }}
                     className="relative w-full max-w-lg"
                 >
-                    <Card variant="neon" className="border-2 border-primary/20 shadow-[0_0_50px_rgba(0,242,255,0.1)]">
+                    <Card variant="glass" className="border-2 border-primary/20 shadow-[0_0_50px_rgba(0,242,255,0.1)]">
                         <div className="mb-8 flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -63,8 +63,8 @@ export const CreateDuelModal = ({ isOpen, onClose }: CreateDuelModalProps) => {
                                             key={game}
                                             onClick={() => setSelectedGame(game)}
                                             className={`rounded-xl border p-3 text-sm font-bold transition-all ${selectedGame === game
-                                                    ? 'border-primary bg-primary/10 text-primary shadow-[inset_0_0_10px_rgba(0,242,255,0.1)]'
-                                                    : 'border-white/5 bg-white/5 text-white/40 hover:bg-white/10'
+                                                ? 'border-primary bg-primary/10 text-primary shadow-[inset_0_0_10px_rgba(0,242,255,0.1)]'
+                                                : 'border-white/5 bg-white/5 text-white/40 hover:bg-white/10'
                                                 }`}
                                         >
                                             {game}
