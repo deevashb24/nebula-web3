@@ -18,7 +18,7 @@ const queryClient = new QueryClient();
 export default function Web3Provider({ children }: { children: React.ReactNode }) {
     return (
         <PrivyProvider
-            appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID || "cm2m5z0m90001l701m5z0m900"} // Placeholder
+            appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID!}
             config={{
                 loginMethods: ['google', 'github', 'wallet', 'email'],
                 appearance: {
