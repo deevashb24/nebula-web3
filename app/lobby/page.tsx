@@ -83,7 +83,7 @@ export default function LobbyPage() {
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ delay: idx * 0.05 }}
                         >
-                            <Card variant={duel.status === 'active' ? 'secondary' : 'neon'} className="h-full">
+                            <Card variant={duel.status === 'active' ? 'secondary' : 'glass'} className="h-full">
                                 <div className="mb-4 flex items-start justify-between">
                                     <div className="flex items-center gap-3">
                                         <div className="relative">

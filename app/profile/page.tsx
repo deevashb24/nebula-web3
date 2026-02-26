@@ -155,7 +155,7 @@ export default function ProfilePage() {
                         <Button variant="ghost" className="w-full mt-6 text-[10px] font-black uppercase border border-white/5">VIEW SHOWCASE</Button>
                     </Card>
 
-                    <Card variant="neon" className="bg-gradient-to-br from-primary/10 to-transparent">
+                    <Card variant="glass" className="bg-gradient-to-br from-primary/10 to-transparent">
                         <h3 className="mb-2 text-sm font-black uppercase italic tracking-tighter">REFER A FRIEND</h3>
                         <p className="mb-6 text-[10px] font-bold text-white/60 leading-relaxed uppercase">Invite your crew and earn 5% of their battle fees for life.</p>
                         <div className="flex gap-2">

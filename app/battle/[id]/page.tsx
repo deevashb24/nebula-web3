@@ -69,7 +69,7 @@ export default function BattlePage() {
             <div className="grid gap-8 lg:grid-cols-12">
                 {/* Battle HUD */}
                 <div className="lg:col-span-8">
-                    <Card variant="neon" className="relative mb-8 overflow-hidden border-2 p-0">
+                    <Card variant="glass" className="relative mb-8 overflow-hidden border-2 p-0">
                         {/* Battle Background Effect */}
                         <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(0,242,255,0.05)_0%,transparent_100%)]" />
                         <div className="absolute left-1/2 top-0 h-full w-[1px] -translate-x-1/2 bg-white/10" />
@@ -206,7 +206,7 @@ export default function BattlePage() {
                 <div className="space-y-6 lg:col-span-4">
                     {[duel.host, opponent].map((player, idx) => (
                         <div key={idx}>
-                            <Card variant={idx === 0 ? 'neon' : 'secondary'} className="group">
+                            <Card variant={idx === 0 ? 'glass' : 'secondary'} className="group">
                                 <div className="flex items-center gap-4">
                                     <div className={`h-16 w-16 overflow-hidden rounded-2xl border-2 ${idx === 0 ? 'border-primary/40' : 'border-secondary/40'} bg-white/5 p-1`}>
                                         <img src={player.avatar} alt={player.username} className="h-full w-full rounded-xl object-cover" />
