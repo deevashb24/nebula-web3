@@ -1,30 +1,39 @@
-import type { Metadata } from "next";
+"use client";
+
+import React from 'react';
+import Navbar from "@/components/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Web3Provider from "@/components/providers/web3-provider";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Nebula | Web3 Productivity Portal",
-  description: "Elevate your productivity, verified on-chain. Proof of focus sessions and reward marketplace.",
-};
-
-import Web3Provider from "@/components/providers/web3-provider";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
   return (
     <html lang="en">
       <body className={`${inter.className} bg-background text-foreground antialiased`}>
         <Web3Provider>
           <Navbar />
-          <main className="min-h-screen pt-24 pb-12">
-            {children}
-          </main>
+          <AnimatePresence mode="wait">
+            <motion.main
+              key={pathname}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="min-h-screen pt-32 pb-12 transition-all duration-300"
+            >
+              {children}
+            </motion.main>
+          </AnimatePresence>
         </Web3Provider>
       </body>
     </html>

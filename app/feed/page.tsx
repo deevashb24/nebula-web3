@@ -11,7 +11,7 @@ export default function FeedPage() {
             <Sidebar />
 
             <main className="md:ml-64 pt-24 pb-12 transition-all duration-500">
-                <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div className="max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-12">
                     {/* Main Gallery */}
                     <div className="lg:col-span-8">
                         <div className="mb-10 flex items-center justify-between">

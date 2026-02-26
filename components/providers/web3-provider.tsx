@@ -29,7 +29,7 @@ export default function Web3Provider({ children }: { children: React.ReactNode }
                 },
                 embeddedWallets: {
                     createOnLogin: 'all-users',
-                },
+                } as any,
             }}
         >
             <WagmiProvider config={config}>

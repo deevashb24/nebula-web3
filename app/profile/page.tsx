@@ -14,7 +14,9 @@ import {
     Target,
     Share2,
     Copy,
-    ExternalLink
+    ExternalLink,
+    Trophy,
+    Sword
 } from 'lucide-react';
 
 export default function ProfilePage() {
@@ -106,7 +108,7 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="divide-y divide-white/5">
-                            {MOCK_HISTORY.map((item) => (
+                            {MOCK_HISTORY.map((item: any) => (
                                 <div key={item.id} className="flex items-center justify-between p-6 transition-colors hover:bg-white/[0.02] md:px-8">
                                     <div className="flex items-center gap-6">
                                         <div className={`flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 ${item.result === 'won' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>

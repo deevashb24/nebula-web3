@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, RotateCcw, Zap, CheckCircle2, Trophy } from "lucide-react";
-import { GlassCard } from "./ui/glass-card";
+import { Play, Pause, RotateCcw, Zap, Brain, Star, Clock, Trophy } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function FocusTracker() {
@@ -54,88 +53,90 @@ export default function FocusTracker() {
     }, [isActive, isPaused, timeLeft, handleSessionComplete]);
 
     return (
-        <div className="w-full max-w-2xl mx-auto space-y-8">
-            <GlassCard className="relative overflow-hidden p-8 flex flex-col items-center gap-8">
-                {/* Progress Background Overlay */}
-                <motion.div
-                    className="absolute bottom-0 left-0 right-0 bg-primary/5 -z-10"
-                    initial={{ height: 0 }}
-                    animate={{ height: `${(1 - timeLeft / (25 * 60)) * 100}%` }}
-                />
+        <div className="w-full flex flex-col items-center gap-32">
 
-                <div className="text-center space-y-2">
-                    <h2 className="text-sm font-semibold text-primary uppercase tracking-widest flex items-center gap-2 justify-center">
-                        <Zap className="w-4 h-4" />
-                        Active Focus Session
-                    </h2>
+            <div className="flex flex-col items-center gap-16">
+                {/* Active Focus Header */}
+                <div className="flex flex-col items-center gap-6">
+                    <div className="inline-flex items-center gap-4 px-8 py-3 bg-white/5 border border-white/10 text-white rounded-full">
+                        <Zap className="w-5 h-5 text-white animate-pulse fill-white shadow-[0_0_20px_rgba(255,255,255,1)]" />
+                        <span className="text-xs font-black uppercase tracking-[0.5em]">Active Focus Session</span>
+                    </div>
+
+                    {/* Massive Digital Timer */}
                     <motion.div
                         key={timeLeft}
-                        initial={{ scale: 0.95, opacity: 0.5 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="text-8xl md:text-9xl font-black tabular-nums tracking-tighter"
+                        initial={{ opacity: 0.8, scale: 0.98 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-[15vw] md:text-[220px] font-black tabular-nums tracking-[-0.08em] text-white leading-none"
                     >
                         {formatTime(timeLeft)}
                     </motion.div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                {/* Magnified Control Action */}
+                <div className="flex items-center gap-12">
                     <Button
-                        size="lg"
-                        glow
+                        variant="primary"
                         onClick={toggleTimer}
-                        className="w-48 h-14 text-lg"
+                        className="group relative w-full min-w-[400px] h-32 rounded-[40px] text-xl font-black uppercase tracking-[0.5em] flex items-center justify-center gap-6 transition-all duration-700 bg-white text-black hover:bg-white hover:scale-105"
                     >
                         {isActive ? (
-                            <span className="flex items-center gap-2"><Pause className="w-5 h-5" /> Pause Session</span>
+                            <><Pause className="w-8 h-8" /> Stop Concentration</>
                         ) : (
-                            <span className="flex items-center gap-2"><Play className="w-5 h-5" /> Start Focus</span>
+                            <><Play className="w-8 h-8" /> Start Focus</>
                         )}
+                        <div className="absolute inset-0 border border-white opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-[40px] scale-110" />
                     </Button>
 
-                    <Button
-                        variant="outline"
-                        size="icon"
+                    <button
                         onClick={resetTimer}
-                        className="h-14 w-14 rounded-full"
+                        className="w-32 h-32 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-white/20 transition-all group"
                     >
-                        <RotateCcw className="w-5 h-5" />
-                    </Button>
+                        <RotateCcw className="w-8 h-8 text-white/30 group-hover:text-white transition-colors" />
+                    </button>
                 </div>
+            </div>
 
-                <div className="flex gap-8 pt-4">
-                    <div className="text-center">
-                        <div className="text-xl font-bold">{sessionsCompleted}</div>
-                        <div className="text-xs text-white/40 uppercase tracking-widest font-medium">Sessions Today</div>
+            {/* Magnified Stats List */}
+            <div className="flex flex-col items-start gap-12 border-l border-white/5 pl-20 py-10">
+                {[
+                    { icon: Brain, label: "Daily Intensity", value: "High" },
+                    { icon: Star, label: "Streak", value: "12 Days" },
+                    { icon: Clock, label: "Total Focus", value: "142 Hours" },
+                    { icon: Trophy, label: "Rank", value: "Solar Master" },
+                ].map((stat) => (
+                    <div key={stat.label} className="flex items-center gap-10 group">
+                        <stat.icon className="w-10 h-10 text-white opacity-20 group-hover:opacity-100 transition-opacity" />
+                        <div className="flex flex-col">
+                            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/20 mb-2">{stat.label}</span>
+                            <span className="text-2xl font-black tracking-tight text-white">{stat.value}</span>
+                        </div>
                     </div>
-                    <div className="w-px bg-white/10" />
-                    <div className="text-center">
-                        <div className="text-xl font-bold">{sessionsCompleted * 50}</div>
-                        <div className="text-xs text-white/40 uppercase tracking-widest font-medium">Points Earned</div>
-                    </div>
-                </div>
-            </GlassCard>
+                ))}
+            </div>
 
             <AnimatePresence>
                 {showReward && (
                     <motion.div
-                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-none"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-3xl px-10"
                     >
-                        <GlassCard className="p-12 text-center space-y-6 shadow-2xl border-primary/20 pointer-events-auto">
-                            <Trophy className="w-20 h-20 text-yellow-400 mx-auto animate-bounce" />
-                            <div className="space-y-2">
-                                <h3 className="text-3xl font-bold">Session Complete!</h3>
-                                <p className="text-white/60">Proof of Focus verified successfully.</p>
+                        <div className="max-w-4xl w-full text-center space-y-16">
+                            <div className="w-32 h-32 bg-white flex items-center justify-center mx-auto">
+                                <Trophy className="w-16 h-16 text-black" />
                             </div>
-                            <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
-                                <span className="text-primary font-bold">+50 NEBULA Points</span>
+                            <div className="space-y-4">
+                                <h3 className="text-7xl font-black uppercase italic tracking-tighter">Session Complete</h3>
+                                <p className="text-xl text-white/40 font-serif italic">Proof of Focus hashed and finalized.</p>
                             </div>
-                            <Button size="lg" className="w-full" onClick={() => setShowReward(false)}>
-                                Claim Rewards
+                            <div className="text-[10px] font-black uppercase tracking-[1em] text-white/20">System credits initiated</div>
+                            <Button variant="primary" size="lg" className="px-32" onClick={() => setShowReward(false)}>
+                                Secure Rewards
                             </Button>
-                        </GlassCard>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

@@ -119,3 +119,38 @@ export const MOCK_HISTORY: FocusSession[] = [
         marketId: 'ses-003',
     },
 ];
+
+export interface Market {
+    id: string;
+    image: string;
+    title: string;
+    category: string;
+    endTime: string;
+    description: string;
+    volume: number;
+    odds: { yes: number; no: number };
+    trending?: boolean;
+}
+
+export const MOCK_MARKETS: Market[] = [
+    {
+        id: "1",
+        image: "https://api.dicebear.com/7.x/shapes/svg?seed=market1",
+        title: "Will ETH reach $4000 by end of week?",
+        category: "Crypto",
+        endTime: new Date(Date.now() + 86400000 * 2).toISOString(),
+        description: "Prediction market for Ethereum price action over the current week based on chain data.",
+        volume: 1250000,
+        odds: { yes: 65, no: 35 }
+    },
+    {
+        id: "2",
+        image: "https://api.dicebear.com/7.x/shapes/svg?seed=market2",
+        title: "Will the Fed cut rates in March?",
+        category: "Finance",
+        endTime: new Date(Date.now() + 86400000 * 14).toISOString(),
+        description: "Macro prediction market on the Federal Reserve's next interest rate decision.",
+        volume: 3400000,
+        odds: { yes: 40, no: 60 }
+    }
+];

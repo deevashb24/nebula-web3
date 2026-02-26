@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Activity, Wallet, Menu, X, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePrivy } from "@privy-io/react-auth";
+import { usePathname } from "next/navigation";
 import CosmicWarp from "./CosmicWarp";
 
 export default function Navbar() {
@@ -12,6 +13,7 @@ export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isWarping, setIsWarping] = useState(false);
     const { login, authenticated, logout, user } = usePrivy();
+    const pathname = usePathname();
 
     const handleLogin = async () => {
         setIsWarping(true);
@@ -30,82 +32,71 @@ export default function Navbar() {
     }, []);
 
     return (
-        <>
+        <div className="fixed top-0 left-0 right-0 z-[100] px-12 py-12 pointer-events-none">
             <CosmicWarp active={isWarping} />
-            <nav
-                className={cn(
-                    "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
-                    isScrolled
-                        ? "bg-black/80 backdrop-blur-lg border-white/10 py-3"
-                        : "bg-transparent border-transparent py-5"
-                )}
-            >
-                <div className="container mx-auto px-6 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.4)] group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                            <Rocket className="text-white w-6 h-6" />
-                        </div>
-                        <span className="text-2xl font-bold tracking-tight text-white">
-                            Nebula<span className="text-brand-primary"> Galactic</span>
+
+            <div className="flex items-start justify-between w-full max-w-[1800px] mx-auto">
+                <div className="flex flex-col gap-10 pointer-events-auto">
+                    {/* Brand Anchor */}
+                    <Link href="/" className="flex items-center gap-4 group">
+                        <div className="w-12 h-12 bg-white flex items-center justify-center text-black font-black text-2xl">N</div>
+                        <span className="text-3xl font-black tracking-[-0.05em] text-white uppercase italic">
+                            Nebula
                         </span>
                     </Link>
 
-                    {/* Desktop Menu */}
-                    <div className="hidden md:flex items-center gap-8">
-                        <Link href="/dashboard" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-                            Cosmology
-                        </Link>
-                        {authenticated ? (
-                            <div className="flex items-center gap-4">
-                                <span className="text-xs text-white/40 font-mono">
-                                    {user?.wallet?.address?.slice(0, 6)}...{user?.wallet?.address?.slice(-4)}
-                                </span>
-                                <button
-                                    onClick={logout}
-                                    className="px-4 py-2 rounded-full glass border border-white/10 text-white text-sm hover:bg-white/10 transition-all"
+                    {/* Expansive Tab Switcher */}
+                    <div className="flex items-center gap-0 border border-white/5 bg-black/50 backdrop-blur-3xl overflow-hidden">
+                        {[
+                            { name: "DASHBOARD", href: "/dashboard" },
+                            { name: "FOCUS CHAMBER", href: "/focus" },
+                            { name: "PROFILE", href: "/profile" },
+                            { name: "COMMUNITY", href: "/rooms" },
+                        ].map((tab) => {
+                            const isActive = pathname === tab.href;
+                            return (
+                                <Link
+                                    key={tab.name}
+                                    href={tab.href}
+                                    className={cn(
+                                        "px-10 py-6 text-[11px] font-black uppercase tracking-[0.4em] transition-all duration-500",
+                                        isActive
+                                            ? "bg-white text-black border-l first:border-l-0 border-white"
+                                            : "text-white/30 hover:text-white/70 bg-transparent border-l first:border-l-0 border-white/5"
+                                    )}
                                 >
-                                    Logout
-                                </button>
-                            </div>
-                        ) : (
-                            <button
-                                onClick={handleLogin}
-                                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-black font-bold shadow-[0_0_20px_rgba(0,242,254,0.3)] hover:shadow-[0_0_30px_rgba(0,242,254,0.5)] transition-all active:scale-95"
-                            >
-                                <Wallet className="w-4 h-4" />
-                                Connect Portal
-                            </button>
-                        )}
+                                    {tab.name}
+                                </Link>
+                            );
+                        })}
                     </div>
-
-                    {/* Mobile Toggle */}
-                    <button
-                        className="md:hidden text-white"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    >
-                        {isMobileMenuOpen ? <X /> : <Menu />}
-                    </button>
                 </div>
 
-                {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                    <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl border-b border-white/10 py-6 px-6 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
-                        <Link href="/focus" className="text-lg font-medium text-white" onClick={() => setIsMobileMenuOpen(false)}>
-                            Focus
-                        </Link>
-                        <Link href="/leaderboard" className="text-lg font-medium text-white" onClick={() => setIsMobileMenuOpen(false)}>
-                            Leaderboard
-                        </Link>
+                {/* User State - Institutional Style */}
+                <div className="flex items-center gap-8 pointer-events-auto">
+                    {authenticated ? (
+                        <div className="flex items-center gap-8 bg-black/50 backdrop-blur-3xl border border-white/5 px-8 py-3 translate-y-3">
+                            <span className="text-[10px] text-white/20 font-mono tracking-widest lowercase">
+                                {user?.wallet?.address?.slice(0, 8)}...
+                            </span>
+                            <div className="w-px h-4 bg-white/5" />
+                            <button
+                                onClick={logout}
+                                className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-all"
+                            >
+                                Deauthorize
+                            </button>
+                        </div>
+                    ) : (
                         <button
-                            onClick={authenticated ? logout : handleLogin}
-                            className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-primary text-black font-bold"
+                            onClick={handleLogin}
+                            className="translate-y-3 px-10 py-5 bg-white text-black text-[10px] font-black uppercase tracking-[0.4em] hover:bg-white/90 transition-all shadow-[0_0_50px_rgba(255,255,255,0.05)]"
                         >
-                            <Wallet className="w-5 h-5" />
-                            {authenticated ? "Log Out" : "Connect Portal"}
+                            Initialize System
                         </button>
-                    </div>
-                )}
-            </nav>
-        </>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 }

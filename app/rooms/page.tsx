@@ -14,7 +14,7 @@ const rooms = [
 
 export default function RoomsPage() {
     return (
-        <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
+        <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 xl:px-20 py-12 space-y-16">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="space-y-1">
                     <h1 className="text-4xl font-bold tracking-tight">Study Lounges</h1>

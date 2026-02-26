@@ -1,159 +1,118 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { MOCK_PLAYERS } from '@/lib/mock-data';
-import {
-    Trophy,
-    Medal,
-    TrendingUp,
-    Crown,
-    Search,
-    Filter
-} from 'lucide-react';
+import { motion } from "framer-motion";
+import { Card } from "@/components/ui/card";
+import { Trophy, TrendingUp, Search, Filter, ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const leaderboardData = [
+    { rank: 1, name: "Nexus.Alpha", score: "14,202", change: "+12.4%", status: "Legendary" },
+    { rank: 2, name: "Vertex_01", score: "12,850", change: "+8.1%", status: "Elite" },
+    { rank: 3, name: "Cipher_Protocol", score: "11,200", change: "+15.2%", status: "Elite" },
+    { rank: 4, name: "Solaris.X", score: "9,400", change: "+2.4%", status: "Pro" },
+    { rank: 5, name: "Aether_99", score: "8,850", change: "+5.7%", status: "Pro" },
+];
 
 export default function LeaderboardPage() {
     return (
-        <div className="space-y-8">
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-                <div>
-                    <h1 className="text-3xl font-black tracking-tight text-white md:text-4xl uppercase italic">Focus Rankings</h1>
-                    <p className="text-white/60 text-sm font-medium tracking-wide">The elite masters of the Nebula Galaxy</p>
-                </div>
+        <div className="flex flex-col bg-[#050505] min-h-screen text-white pt-36 px-10 sm:px-20 lg:px-32 relative selection:bg-white selection:text-black">
 
-                <div className="flex gap-2">
-                    <Button variant="glass" className="h-10 text-xs font-bold gap-2">
-                        <Trophy className="h-4 w-4 text-primary" />
-                        WEEKLY POOL: 50,000 NEBULA
-                    </Button>
-                </div>
-            </div>
-
-            {/* Top 3 Podiums */}
-            <div className="grid gap-6 md:grid-cols-3">
-                {[MOCK_PLAYERS[1], MOCK_PLAYERS[0], MOCK_PLAYERS[2]].map((player, idx) => {
-                    const isFirst = idx === 1;
-                    return (
-                        <motion.div
-                            key={player.address}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.1 }}
-                            className={isFirst ? "order-first md:order-none" : ""}
-                        >
-                            <Card
-                                variant={isFirst ? "neon" : "secondary"}
-                                className={isFirst ? "relative -mt-4 py-12 scale-105 border-2 border-primary/40 shadow-[0_0_50px_rgba(0,242,255,0.15)]" : "relative"}
-                                hoverEffect={true}
-                            >
-                                {isFirst && (
-                                    <div className="absolute -top-6 left-1/2 -translate-x-1/2">
-                                        <Crown className="h-12 w-12 text-primary drop-shadow-[0_0_15px_rgba(0,242,255,0.8)] fill-primary/20" />
-                                    </div>
-                                )}
-                                <div className="flex flex-col items-center text-center">
-                                    <div className={`mb-4 h-24 w-24 overflow-hidden rounded-full border-4 ${isFirst ? 'border-primary' : 'border-secondary/40'} bg-white/5 p-1 px-4`}>
-                                        <img src={player.avatar} alt={player.username} className="h-full w-full rounded-full object-cover" />
-                                    </div>
-                                    <h3 className="text-xl font-black uppercase tracking-tighter text-white mb-1">{player.username}</h3>
-                                    <p className="text-[10px] font-bold text-white/40 uppercase mb-4">{player.address}</p>
-
-                                    <div className="grid grid-cols-2 gap-8 w-full border-t border-white/10 pt-6">
-                                        <div>
-                                            <p className="text-[10px] font-bold text-white/40 uppercase mb-1">Win Rate</p>
-                                            <p className="text-lg font-black text-white">{Math.floor((player.wins / (player.wins + player.losses)) * 100)}%</p>
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-bold text-white/40 uppercase mb-1">Rank</p>
-                                            <p className={`text-lg font-black ${isFirst ? 'text-primary' : 'text-secondary'}`}>#{player.rank}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Card>
-                        </motion.div>
-                    )
-                })}
-            </div>
-
-            {/* Full Leaderboard Table */}
-            <Card variant="glass" className="overflow-hidden p-0 border-white/5">
-                <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.02] p-6 lg:px-8">
-                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-white/40">Tier 1 Elite</h3>
-                    <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 h-3 w-3 -translate-y-1/2 text-white/20" />
-                            <input
-                                type="text"
-                                placeholder="SEARCH PLAYER..."
-                                className="h-8 w-40 rounded bg-white/5 pl-8 pr-4 text-[10px] font-bold uppercase text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-primary/40 border border-white/5"
-                            />
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="max-w-7xl w-full mx-auto mb-24"
+            >
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 border-b border-white/5 pb-16">
+                    <div>
+                        <div className="flex items-center gap-4 mb-8 opacity-40">
+                            <div className="w-1 h-1 bg-white rounded-full" />
+                            <span className="text-[10px] font-black tracking-[0.4em] uppercase">Global Performance Registry</span>
                         </div>
-                        <Button variant="ghost" size="sm" className="h-8 text-[10px] font-bold gap-2 bg-white/5 border border-white/5 uppercase">
-                            <Filter className="h-3 w-3" />
-                            FILTER
-                        </Button>
+                        <h1 className="text-8xl font-black tracking-tighter uppercase italic leading-none">
+                            Rankings.
+                        </h1>
+                    </div>
+
+                    <div className="flex flex-col items-start md:items-end gap-6">
+                        <span className="text-[10px] font-black tracking-[0.4em] uppercase text-white/20">Current Weekly Pool</span>
+                        <div className="text-5xl font-black tracking-tighter text-white">
+                            125,000 <span className="text-white/20">NEB</span>
+                        </div>
                     </div>
                 </div>
+            </motion.div>
 
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="border-b border-white/5 bg-white/[0.01]">
-                                <th className="px-8 py-4 text-[10px] font-black uppercase tracking-wider text-white/20">Rank</th>
-                                <th className="px-8 py-4 text-[10px] font-black uppercase tracking-wider text-white/20">Player</th>
-                                <th className="px-8 py-4 text-[10px] font-black uppercase tracking-wider text-white/20 text-center">Sessions</th>
-                                <th className="px-8 py-4 text-[10px] font-black uppercase tracking-wider text-white/20 text-center">Efficiency</th>
-                                <th className="px-8 py-4 text-[10px] font-black uppercase tracking-wider text-white/20 text-center">Focus State</th>
-                                <th className="px-8 py-4 text-[10px] font-black uppercase tracking-wider text-white/20 text-right">Trend</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {MOCK_PLAYERS.map((player, idx) => (
-                                <tr key={player.address} className="group border-b border-white/5 transition-colors hover:bg-white/[0.02]">
-                                    <td className="px-8 py-6">
-                                        <span className={`text-sm font-black italic tracking-tighter ${idx === 0 ? 'text-primary' : 'text-white'}`}>
-                                            {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
-                                        </span>
-                                    </td>
-                                    <td className="px-8 py-6">
-                                        <div className="flex items-center gap-4">
-                                            <div className="h-10 w-10 overflow-hidden rounded-xl border border-white/10 bg-white/5 p-1">
-                                                <img src={player.avatar} alt={player.username} className="h-full w-full object-cover" />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm font-bold text-white uppercase">{player.username}</p>
-                                                <p className="text-[10px] font-medium text-white/40">{player.address}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6 text-center">
-                                        <span className="text-sm font-bold text-white">{player.wins}</span>
-                                    </td>
-                                    <td className="px-8 py-6 text-center">
-                                        <span className="text-sm font-bold text-white/60">{player.losses}</span>
-                                    </td>
-                                    <td className="px-8 py-6 text-center">
-                                        <div className="mx-auto h-1.5 w-24 rounded-full bg-white/5 overflow-hidden">
-                                            <div
-                                                className="h-full bg-gradient-to-r from-primary to-secondary shadow-[0_0_10px_rgba(0,242,255,0.4)]"
-                                                style={{ width: `${(player.wins / (player.wins + player.losses)) * 100}%` }}
-                                            />
-                                        </div>
-                                    </td>
-                                    <td className="px-8 py-6 text-right">
-                                        <div className="inline-flex items-center gap-1.5 rounded-lg bg-green-500/10 px-2 py-1 text-[10px] font-black text-green-500 uppercase">
-                                            <TrendingUp className="h-3 w-3" />
-                                            +12 %
-                                        </div>
-                                    </td>
+            {/* Content Section */}
+            <div className="max-w-7xl w-full mx-auto pb-40">
+                <Card variant="default" className="border-white/5 bg-black/40">
+                    <div className="flex items-center justify-between mb-16">
+                        <div className="flex items-center gap-8">
+                            <div className="relative group">
+                                <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors" />
+                                <input
+                                    type="text"
+                                    placeholder="SEARCH SYSTEM..."
+                                    className="bg-transparent border-none text-[10px] font-black uppercase tracking-[0.3em] pl-10 focus:ring-0 placeholder:text-white/10 w-64"
+                                />
+                            </div>
+                        </div>
+
+                        <Button variant="outline" size="sm" className="border-white/5 hover:border-white/20 text-[10px]">
+                            <Filter className="w-3 h-3 mr-2" />
+                            Filter Options
+                        </Button>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="border-b border-white/5 text-left">
+                                    <th className="px-10 py-8 text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Index</th>
+                                    <th className="px-10 py-8 text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Operator</th>
+                                    <th className="px-10 py-8 text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Score</th>
+                                    <th className="px-10 py-8 text-right text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Variance</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </Card>
+                            </thead>
+                            <tbody>
+                                {leaderboardData.map((player) => (
+                                    <tr key={player.rank} className="border-b border-white/5 hover:bg-white/[0.02] transition-colors group">
+                                        <td className="px-10 py-10">
+                                            <span className="text-2xl font-black tracking-tighter text-white/40 group-hover:text-white transition-colors">
+                                                {player.rank.toString().padStart(2, '0')}
+                                            </span>
+                                        </td>
+                                        <td className="px-10 py-10">
+                                            <div className="flex items-center gap-6">
+                                                <div className="w-10 h-10 bg-white/5 border border-white/10 flex items-center justify-center text-[10px] font-black">
+                                                    {player.name[0]}
+                                                </div>
+                                                <div>
+                                                    <div className="text-sm font-black uppercase tracking-widest group-hover:text-white transition-colors">{player.name}</div>
+                                                    <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest mt-1">{player.status}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-10 py-10">
+                                            <div className="text-sm font-black tracking-widest">{player.score}</div>
+                                        </td>
+                                        <td className="px-10 py-10 text-right">
+                                            <div className="inline-flex items-center gap-2 text-[10px] font-black text-emerald-500 uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity">
+                                                <TrendingUp className="h-3 w-3" />
+                                                {player.change}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </Card>
+            </div>
+
+            {/* Background Texture Overlay */}
+            <div className="fixed inset-0 pointer-events-none opacity-[0.03] contrast-150 brightness-150"
+                style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
         </div>
     );
 }

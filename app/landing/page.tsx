@@ -12,7 +12,7 @@ export default function LandingPage() {
             <section className="relative pt-32 pb-20 px-4">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-brand-primary/10 blur-[120px] rounded-full -z-10" />
 
-                <div className="max-w-6xl mx-auto text-center">
+                <div className="max-w-[1600px] mx-auto text-center px-6 md:px-12">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -63,7 +63,7 @@ export default function LandingPage() {
 
             {/* Features */}
             <section className="py-24 px-4 border-t border-white/5 bg-black/40">
-                <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="max-w-[1600px] mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-3 gap-8 mt-40">
                     {[
                         {
                             icon: Coins,

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link"; import { motion } from "framer-motion";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Timer, Zap, Trophy, TrendingUp, Calendar, ChevronRight, Star, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ export default function DashboardPage() {
         });
     };
     return (
-        <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
+        <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 xl:px-20 py-12 space-y-16">
             {/* Header Section */}
             <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>

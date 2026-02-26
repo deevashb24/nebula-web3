@@ -1,6 +1,6 @@
 'use client';
 
-import { Header } from '@/components/layout/Header';
+import Navbar from '@/components/Navbar';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { InfiniteFeed } from '@/components/feed/infinite-feed';
 import { Button } from '@/components/ui/button';
@@ -11,11 +11,11 @@ export default function ProfilePage({ params }: { params: { username: string } }
 
     return (
         <div className="min-h-screen">
-            <Header />
+            <Navbar />
             <Sidebar />
 
             <main className="md:ml-64 pt-24 pb-12">
-                <div className="max-w-4xl mx-auto px-4">
+                <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-12">
                     {/* Profile Header */}
                     <div className="relative mb-12">
                         <div className="h-48 w-full bg-gradient-to-r from-brand-primary/20 via-brand-secondary/20 to-brand-accent/20 rounded-3xl border border-white/5" />

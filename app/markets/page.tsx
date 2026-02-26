@@ -47,7 +47,7 @@ export default function MarketplacePage() {
     return (
         <div className="flex flex-col items-center px-6 py-12 space-y-12">
             {/* Header */}
-            <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="w-full max-w-[1600px] mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div className="space-y-2 text-center md:text-left">
                     <h1 className="text-4xl md:text-5xl font-black tracking-tight flex items-center gap-4">
                         <ShoppingBag className="w-10 h-10 text-primary" />
@@ -68,7 +68,7 @@ export default function MarketplacePage() {
             </div>
 
             {/* Rewards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-[1600px] mx-auto px-6 md:px-12 mt-12">
                 {REWARDS.map((reward, i) => (
                     <motion.div
                         key={reward.id}
@@ -94,7 +94,7 @@ export default function MarketplacePage() {
                                 </div>
                                 <Button
                                     className="w-full"
-                                    variant={balance >= reward.price ? "default" : "outline"}
+                                    variant={balance >= reward.price ? "primary" : "outline"}
                                     disabled={balance < reward.price}
                                 >
                                     {balance >= reward.price ? "Purchase" : "Insufficient Energy"}

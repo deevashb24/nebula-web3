@@ -1,12 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --bg-dark: #020202;
-  --bg-card: rgba(10, 10, 15, 0.7);
-  --accent-primary: #00f2fe;
-  --accent-secondary: #7000ff;
-  --text-main: #ffffff;
-  --text-muted: #a0a0b0;
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glow-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+  /* Institutional Obsidian Palette */
+  --background: #050505;
+  --foreground: #ffffff;
+
+  /* Brand Accents - Subtle & Sharp */
+  --primary: #ffffff;
+  --primary-glow: rgba(255, 255, 255, 0.15);
+  --secondary: #1e293b;
+  /* Slate 800 */
+  --accent: #64748b;
+  /* Slate 500 */
+
+  /* Institutional Textures */
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.04);
 }
 
 * {
@@ -16,67 +28,67 @@
 }
 
 body {
-  background-color: var(--bg-dark);
-  color: var(--text-main);
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+
+  /* Institutional Grain Texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px;
+  background-blend-mode: overlay;
+  opacity: 1;
 }
 
 main {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, rgba(112, 0, 255, 0.1), transparent),
-    radial-gradient(circle at bottom left, rgba(0, 242, 254, 0.1), transparent);
+  width: 100vw;
+  /* Removed gradients for minimalist feel */
+  background: var(--background);
+  position: relative;
 }
 
-.glass-container {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+/* Institutional Glass - Sharp & Subtle */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 0;
+  /* Forced sharp corners */
 }
 
-.neon-text {
-  background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 800;
+.glass:hover {
+  background: var(--glass-hover);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
 }
 
-.btn-primary {
-  background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: var(--glow-shadow);
+/* Institutional Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.terminal-box {
-  background: #000;
-  border: 1px solid #1a1a1a;
-  border-radius: 8px;
-  padding: 1rem;
-  font-family: 'Courier New', Courier, monospace;
-  color: #0f0;
-  font-size: 0.85rem;
-  max-height: 300px;
-  overflow-y: auto;
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
 }
 
-.grid-layout {
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Grid System Helper */
+.institutional-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(12, 1fr);
   gap: 2rem;
-  padding: 2rem;
 }
