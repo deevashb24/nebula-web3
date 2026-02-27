@@ -1,157 +1,211 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, Shield, Users, TrendingUp } from "lucide-react";
-import Link from 'next/link';
+import Link from "next/link";
+import { ArrowRight, ExternalLink } from "lucide-react";
+import LandingNavbar from "@/components/LandingNavbar";
 
-const fadeIn = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } };
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const PARTNERS = [
+  "git", "npm", "Lucidchart", "wrike", "jQuery", "OpenStack", "ServiceNow", "Paysafe",
+];
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col bg-[#09090b] min-h-screen selection:bg-orange-500/30 selection:text-orange-200 overflow-hidden relative font-[Geist,Manrope,Inter,sans-serif]">
+    <div className="flex flex-col bg-[#09090b] min-h-screen selection:bg-orange-500/30 selection:text-orange-200 font-[Geist,Manrope,Inter,sans-serif]">
 
-      {/* Noise texture overlay */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      {/* Background noise texture */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-30 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-      {/* Orange top-center glow */}
-      <div className="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[30%] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent pointer-events-none z-0" />
+      {/* Radial glow top-center */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none z-0 opacity-20 bg-[radial-gradient(ellipse_at_top,#f97316_0%,transparent_65%)]" />
 
-      {/* Navbar */}
-      <header className="relative z-50 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto w-full">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-orange-500 flex items-center justify-center">
-            <Zap className="w-4 h-4 text-white" />
-          </div>
-          <span className="font-bold text-white text-lg tracking-tight">Nebula</span>
-        </div>
-
-        <nav className="hidden md:flex items-center gap-8">
-          {['Dashboard', 'Focus', 'Leaderboard', 'Community'].map((item) => (
-            <Link
-              key={item}
-              href={`/${item.toLowerCase()}`}
-              className="text-zinc-400 hover:text-white text-sm font-medium transition-colors duration-200"
-            >
-              {item}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Link href="/focus">
-            <Button variant="glow" size="sm" className="gap-2">
-              Launch App
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Button>
-          </Link>
-        </div>
-      </header>
+      {/* Landing Navbar */}
+      <div className="relative z-50">
+        <LandingNavbar />
+      </div>
 
       {/* Hero */}
-      <main className="relative z-10 flex flex-col items-center text-center px-6 pt-16 pb-32 max-w-7xl mx-auto w-full">
+      <main className="relative z-10 flex flex-col items-center text-center px-6 pt-28 pb-20 max-w-6xl mx-auto w-full flex-1">
 
-        {/* Badge */}
+        {/* Eyebrow badge */}
         <motion.div
-          initial="hidden" animate="visible" variants={fadeIn}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 text-orange-400 text-xs font-medium mb-8 [animation:fadeSlideIn_1s_ease-out_0.8s_both]"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zinc-700/60 bg-zinc-900/80 text-zinc-400 text-xs font-medium mb-8 backdrop-blur-sm"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-          Web3 Productivity Protocol — Live on Mainnet
+          Trusted by 1,200+ Web3 teams worldwide
         </motion.div>
 
         {/* Headline */}
         <motion.h1
-          initial="hidden" animate="visible" variants={fadeIn}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="text-5xl md:text-7xl md:text-8xl font-bold tracking-tighter leading-[1.1] text-white mb-6 max-w-5xl"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+          className="text-5xl sm:text-6xl md:text-[72px] font-bold tracking-[-0.03em] leading-[1.08] text-white mb-7 max-w-4xl"
         >
-          Focus. Earn.{' '}
+          Scale your protocol with{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600">
-            Prove it on-chain.
+            smart infrastructure
           </span>
         </motion.h1>
 
         {/* Subheadline */}
         <motion.p
-          initial="hidden" animate="visible" variants={fadeIn}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.16 }}
           className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-12"
         >
-          Nebula turns your deep work sessions into verifiable on-chain proofs.
-          Earn rewards for staying focused, build streaks, and compete on the global leaderboard.
+          The essential toolkit for deploying secure dApps. From writing your first smart
+          contract to governing a global DAO, build it all on one unified layer.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTAs */}
         <motion.div
-          initial="hidden" animate="visible" variants={fadeIn}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center gap-4 mb-24"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.24 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24"
         >
-          <Link href="/focus">
-            <Button variant="glow" size="lg" className="gap-2 px-8">
-              Start Focusing
-              <ArrowRight className="w-4 h-4" />
-            </Button>
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-white text-black text-sm font-bold hover:bg-zinc-100 active:scale-[0.98] transition-all duration-200 tracking-widest uppercase shadow-lg"
+          >
+            Start Building
+            <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href="/leaderboard">
-            <Button variant="glass" size="lg" className="gap-2 px-8">
-              View Leaderboard
-            </Button>
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-white/[0.04] border border-white/10 text-white text-sm font-semibold hover:bg-white/[0.08] hover:border-orange-500/30 active:scale-[0.98] transition-all duration-200"
+          >
+            View Pricing
           </Link>
         </motion.div>
 
-        {/* Stats */}
+        {/* Trust / Partners Section */}
         <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: 0.6 }}
-          className="w-full grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-zinc-800 max-w-4xl"
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="w-full max-w-4xl pt-16 border-t border-zinc-800"
         >
-          {[
-            { label: "Total Value Locked", value: "$12.4M", pulse: true },
-            { label: "Verified Focus Hours", value: "842,000" },
-            { label: "Protocol Status", value: "Nominal" },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              className={`py-10 flex flex-col items-start group ${i === 1 ? 'md:px-12 md:border-x border-zinc-800' : i === 0 ? 'md:pr-12' : 'md:pl-12'}`}
-            >
-              <span className="text-xs font-medium tracking-wider uppercase text-zinc-500 mb-4 group-hover:text-orange-400 transition-colors">
-                {stat.label}
+          <p className="text-[11px] font-semibold tracking-[0.22em] uppercase text-zinc-600 mb-10">
+            Trusted by the modern Web3 ecosystem
+          </p>
+
+          {/* Partner logos (text-based) */}
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 mb-10">
+            {PARTNERS.map((name) => (
+              <span
+                key={name}
+                className="text-zinc-600 hover:text-zinc-400 transition-colors duration-300 font-semibold text-base tracking-tight select-none cursor-default"
+              >
+                {name}
               </span>
-              <div className="flex items-baseline gap-3">
-                <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tight">{stat.value}</h3>
-                {stat.pulse && <div className="w-2 h-2 bg-green-500/50 rounded-full animate-pulse" />}
-              </div>
-            </div>
-          ))}
-        </motion.div>
+            ))}
+          </div>
 
-        {/* Feature Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mt-16 max-w-5xl"
-        >
-          {[
-            { icon: Shield, title: "Proof of Focus", desc: "Every session is hashed and verified on-chain, creating an immutable record of your productivity." },
-            { icon: TrendingUp, title: "Earn While Working", desc: "Complete focus sessions to earn $NEBULA tokens. The longer you focus, the more you earn." },
-            { icon: Users, title: "Community Rooms", desc: "Join live study rooms with other focused individuals. Accountability through blockchain transparency." },
-          ].map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="group p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-orange-500/30 hover:shadow-orange transition-all duration-300">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4 group-hover:bg-orange-500/20 transition-colors">
-                <Icon className="w-5 h-5 text-orange-400" />
-              </div>
-              <h3 className="font-semibold text-white mb-2">{title}</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed">{desc}</p>
-            </div>
-          ))}
+          <Link
+            href="#"
+            className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-orange-400 transition-colors"
+          >
+            Read the manifesto
+            <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
         </motion.div>
       </main>
 
-      {/* Bottom gradient */}
-      <div className="fixed bottom-0 left-0 right-0 h-[30%] bg-gradient-to-b from-transparent to-black/60 pointer-events-none z-0" />
+      {/* Footer */}
+      <footer className="relative z-10 border-t border-zinc-800 bg-zinc-950/80 mt-16">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-12">
+
+            {/* Brand */}
+            <div className="sm:col-span-2">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                </div>
+                <span className="font-bold text-white text-xl tracking-tight">NebulaNow</span>
+              </div>
+              <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
+                The unified infrastructure layer for the decentralized web.
+              </p>
+            </div>
+
+            {/* About Us */}
+            <div>
+              <h4 className="text-xs font-semibold text-white mb-4 uppercase tracking-widest">About Us</h4>
+              <ul className="space-y-3">
+                {["Mission", "Team", "Newsletter", "Careers"].map((item) => (
+                  <li key={item}>
+                    <Link href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h4 className="text-xs font-semibold text-white mb-4 uppercase tracking-widest">Support</h4>
+              <ul className="space-y-3">
+                {["Contact", "Refund Policy", "FAQ's", "Status"].map((item) => (
+                  <li key={item}>
+                    <Link href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Social */}
+            <div>
+              <h4 className="text-xs font-semibold text-white mb-4 uppercase tracking-widest">Social</h4>
+              <ul className="space-y-3">
+                {["Instagram", "LinkedIn", "YouTube", "Twitter"].map((item) => (
+                  <li key={item}>
+                    <Link href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="mt-12 pt-8 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p className="text-xs text-zinc-600">
+              Copyright © NebulaNow ·{" "}
+              <Link href="#" className="hover:text-zinc-400 transition-colors">
+                Terms of Service
+              </Link>
+            </p>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
+            >
+              Back to top ↑
+            </button>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
