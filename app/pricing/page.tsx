@@ -1,385 +1,320 @@
 "use client";
 
+import { Check, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Check, X, Zap, ChevronDown } from "lucide-react";
-import Link from "next/link";
 import LandingNavbar from "@/components/LandingNavbar";
+import { cn } from "@/lib/utils";
 
-const fadeUp = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
-
-const plans = [
+const FAQS = [
     {
-        name: "Starter",
-        price: { monthly: 0, annual: 0 },
-        description: "For individuals and small projects",
-        cta: "Get Started",
-        ctaStyle: "outline",
-        highlighted: false,
-        features: [
-            "10K requests/month",
-            "Community support",
-            "Basic analytics",
-            "Public endpoints",
-        ],
+        q: "Can I change plans later?",
+        a: "Absolutely. You can upgrade or downgrade your plan at any time. Prorated charges will be applied automatically.",
     },
     {
-        name: "Pro",
-        price: { monthly: 29, annual: 23 },
-        description: "For growing teams and production apps",
-        cta: "Start Pro Trial",
-        ctaStyle: "primary",
-        highlighted: true,
-        features: [
-            "100K requests/month",
-            "Priority support",
-            "Advanced analytics",
-            "Private endpoints",
-            "Custom domains",
-        ],
+        q: "What happens if I exceed my monthly requests?",
+        a: "For Starter and Pro plans, we'll notify you when you reach 80% and 100% of your limit. We offer a soft cap, so your service won't be immediately interrupted, but we'll reach out to discuss upgrading your plan.",
     },
     {
-        name: "Performance",
-        price: { monthly: 129, annual: 103 },
-        description: "For enterprise-grade applications",
-        cta: "Contact Sales",
-        ctaStyle: "outline",
-        highlighted: false,
-        features: [
-            "Unlimited requests",
-            "24/7 dedicated support",
-            "Real-time monitoring",
-            "SLA guarantees",
-            "Custom infrastructure",
-        ],
-    },
-];
-
-const comparisonFeatures = [
-    {
-        category: "Infrastructure",
-        rows: [
-            { feature: "Monthly requests", starter: "10K", pro: "100K", performance: "Unlimited" },
-            { feature: "Private endpoints", starter: false, pro: true, performance: true },
-            { feature: "Custom domains", starter: false, pro: true, performance: true },
-            { feature: "Custom infrastructure", starter: false, pro: false, performance: true },
-        ],
-    },
-    {
-        category: "Security",
-        rows: [
-            { feature: "SSL/TLS encryption", starter: true, pro: true, performance: true },
-            { feature: "DDoS protection", starter: false, pro: true, performance: true },
-            { feature: "SLA guarantees", starter: false, pro: false, performance: true },
-            { feature: "Audit logs", starter: false, pro: true, performance: true },
-        ],
-    },
-    {
-        category: "Support",
-        rows: [
-            { feature: "Community support", starter: true, pro: true, performance: true },
-            { feature: "Priority support", starter: false, pro: true, performance: true },
-            { feature: "24/7 dedicated support", starter: false, pro: false, performance: true },
-            { feature: "Onboarding assistance", starter: false, pro: true, performance: true },
-        ],
-    },
-];
-
-const faqs = [
-    {
-        q: "Can I change my plan at any time?",
-        a: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately and billing is prorated.",
-    },
-    {
-        q: "What happens if I exceed my request limit?",
-        a: "Requests beyond your plan limit are charged at a small overage rate. You'll receive alerts before hitting your limit.",
-    },
-    {
-        q: "Is there a free trial for paid plans?",
-        a: "Yes, Pro comes with a 14-day free trial. No credit card required to start.",
+        q: "Is there a free trial for the Pro plan?",
+        a: "Yes, we offer a 14-day free trial on the Pro plan so you can test all the advanced features before committing.",
     },
     {
         q: "How does annual billing work?",
-        a: "With annual billing you save 20% compared to monthly. You're billed once for the full year upfront.",
+        a: "Annual billing gives you a 20% discount compared to monthly billing. You are charged upfront for the entire year.",
     },
     {
         q: "What payment methods do you accept?",
-        a: "We accept all major credit cards, USDC, and ETH payments via our Web3-native checkout flow.",
+        a: "We accept all major credit cards, PayPal, and for Enterprise customers, we can arrange invoice-based payments via bank transfer.",
     },
 ];
 
 export default function PricingPage() {
     const [isAnnual, setIsAnnual] = useState(false);
-    const [openFaq, setOpenFaq] = useState<number | null>(null);
+    const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
     return (
-        <div className="flex flex-col bg-[#09090b] min-h-screen text-white font-[Geist,Manrope,Inter,sans-serif] selection:bg-orange-500/30 selection:text-orange-200">
+        <div className="flex flex-col bg-zinc-950 min-h-screen selection:bg-orange-500/30 selection:text-orange-200 overflow-x-hidden">
 
-            {/* Noise layer */}
-            <div className="fixed inset-0 pointer-events-none z-0 opacity-20 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            {/* Noise texture — exact reference */}
+            <div className="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-            {/* Top glow */}
-            <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] pointer-events-none z-0 opacity-15 bg-[radial-gradient(ellipse_at_top,#f97316_0%,transparent_65%)]" />
+            {/* Top radial glow */}
+            <div className="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[30%] pointer-events-none z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-500/20 via-transparent to-transparent" />
 
-            <div className="relative z-50">
-                <LandingNavbar />
-            </div>
+            {/* Floating pill navbar */}
+            <LandingNavbar />
 
-            <main className="relative z-10 flex-1">
+            <main className="relative z-10 flex flex-col items-center pt-32 pb-24 md:pt-36 max-w-7xl mx-auto w-full px-6">
 
-                {/* Hero */}
-                <section className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
-                    <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.7 }}>
-                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-zinc-700 bg-zinc-900 text-zinc-400 text-xs font-medium mb-8">
-                            <Zap className="w-3.5 h-3.5 text-orange-400" />
-                            Simple, transparent pricing
-                        </div>
-                        <h1 className="text-5xl md:text-6xl font-bold tracking-tighter text-white mb-5">
-                            Build without limits
-                        </h1>
-                        <p className="text-zinc-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10">
-                            Choose the perfect plan for your project. Scale as you grow with our flexible infrastructure options.
-                        </p>
-
-                        {/* Toggle */}
-                        <div className="inline-flex items-center gap-4 p-1.5 rounded-xl bg-zinc-900 border border-zinc-800">
-                            <button
-                                onClick={() => setIsAnnual(false)}
-                                className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${!isAnnual ? "bg-white text-black shadow" : "text-zinc-400 hover:text-white"
-                                    }`}
-                            >
-                                Monthly
-                            </button>
-                            <button
-                                onClick={() => setIsAnnual(true)}
-                                className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${isAnnual ? "bg-white text-black shadow" : "text-zinc-400 hover:text-white"
-                                    }`}
-                            >
-                                Annual
-                                <span className="text-xs px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-400 font-medium">
-                                    Save 20%
-                                </span>
-                            </button>
-                        </div>
-                    </motion.div>
-                </section>
-
-                {/* Pricing Cards */}
-                <section className="max-w-6xl mx-auto px-6 pb-20">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {plans.map((plan, i) => {
-                            const price = isAnnual ? plan.price.annual : plan.price.monthly;
-                            return (
-                                <motion.div
-                                    key={plan.name}
-                                    initial="hidden"
-                                    animate="visible"
-                                    variants={fadeUp}
-                                    transition={{ duration: 0.6, delay: i * 0.08 }}
-                                    className={`relative flex flex-col p-8 rounded-2xl border transition-all duration-300 ${plan.highlighted
-                                            ? "bg-orange-500/5 border-orange-500/40 shadow-orange"
-                                            : "bg-zinc-900 border-zinc-800 hover:border-zinc-700"
-                                        }`}
-                                >
-                                    {plan.highlighted && (
-                                        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                                            <span className="px-4 py-1.5 rounded-full bg-orange-500 text-white text-xs font-bold tracking-wide uppercase">
-                                                Most Popular
-                                            </span>
-                                        </div>
-                                    )}
-
-                                    <div className="mb-8">
-                                        <h2 className="text-lg font-bold text-white mb-1">{plan.name}</h2>
-                                        <p className="text-sm text-zinc-500 mb-6">{plan.description}</p>
-                                        <div className="flex items-baseline gap-1">
-                                            <span className="text-5xl font-bold text-white tracking-tighter">
-                                                ${price}
-                                            </span>
-                                            <span className="text-zinc-500 text-sm font-medium">/mo</span>
-                                        </div>
-                                        {isAnnual && price > 0 && (
-                                            <p className="text-xs text-zinc-600 mt-1">
-                                                Billed annually (${price * 12}/yr)
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    <ul className="space-y-3.5 mb-8 flex-1">
-                                        {plan.features.map((feature) => (
-                                            <li key={feature} className="flex items-center gap-3 text-sm text-zinc-300">
-                                                <div className="w-5 h-5 rounded-full bg-orange-500/15 border border-orange-500/25 flex items-center justify-center flex-shrink-0">
-                                                    <Check className="w-3 h-3 text-orange-400" />
-                                                </div>
-                                                {feature}
-                                            </li>
-                                        ))}
-                                    </ul>
-
-                                    <Link
-                                        href="#"
-                                        className={`w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-bold tracking-wider uppercase transition-all duration-200 ${plan.highlighted
-                                                ? "bg-white text-black hover:bg-zinc-100 shadow-lg"
-                                                : "border border-zinc-700 text-white bg-transparent hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400"
-                                            }`}
-                                    >
-                                        {plan.cta}
-                                    </Link>
-                                </motion.div>
-                            );
-                        })}
+                {/* Header section */}
+                <div className="text-center max-w-3xl mb-16">
+                    <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium mb-8">
+                        <svg className="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Simple, transparent pricing
                     </div>
-                </section>
 
-                {/* Comparison Table */}
-                <section className="max-w-5xl mx-auto px-6 pb-24">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7 }}
-                    >
-                        <h2 className="text-3xl font-bold tracking-tight text-white text-center mb-12">
-                            Compare Plans
-                        </h2>
+                    <h1 className="[animation:fadeSlideIn_1s_ease-out_1s_both] text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
+                        Build without limits
+                    </h1>
+                    <p className="[animation:fadeSlideIn_1s_ease-out_1.2s_both] text-gray-400 text-base md:text-lg max-w-xl mx-auto mb-10">
+                        Choose the perfect plan for your project. Scale as you grow with our flexible infrastructure options.
+                    </p>
 
-                        <div className="rounded-2xl border border-zinc-800 overflow-hidden">
-                            {/* Header */}
-                            <div className="grid grid-cols-4 bg-zinc-900/80 border-b border-zinc-800 px-6 py-4">
-                                <div className="text-sm font-medium text-zinc-500">Feature</div>
-                                {plans.map((p) => (
-                                    <div key={p.name} className={`text-sm font-bold text-center ${p.highlighted ? "text-orange-400" : "text-white"}`}>
-                                        {p.name}
-                                    </div>
-                                ))}
+                    {/* Toggle */}
+                    <div className="[animation:fadeSlideIn_1s_ease-out_1.4s_both] inline-flex items-center p-1 bg-white/5 border border-white/10 rounded-full">
+                        <button
+                            onClick={() => setIsAnnual(false)}
+                            className={cn(
+                                "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300",
+                                !isAnnual ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-white"
+                            )}
+                        >
+                            Monthly
+                        </button>
+                        <button
+                            onClick={() => setIsAnnual(true)}
+                            className={cn(
+                                "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-3",
+                                isAnnual ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-white"
+                            )}
+                        >
+                            Annual
+                            <span className={cn(
+                                "text-[11px] px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold",
+                                isAnnual ? "bg-orange-100 text-orange-600" : "bg-orange-500/20 text-orange-400"
+                            )}>
+                                Save 20%
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Pricing Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mb-32 [animation:fadeSlideIn_1s_ease-out_1.6s_both]">
+
+                    {/* Card 1: Starter */}
+                    <div className="relative p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.02] flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300">
+                        <div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Starter</h3>
+                            <p className="text-base text-gray-400 h-10">For individuals and small projects</p>
+                            <div className="my-8">
+                                <span className="text-5xl font-bold text-white">$0</span>
+                                <span className="text-base text-gray-400 font-medium ml-1">/mo</span>
                             </div>
+                        </div>
 
-                            {comparisonFeatures.map((group, gi) => (
-                                <div key={group.category}>
-                                    {/* Group header */}
-                                    <div className="px-6 py-3 bg-zinc-900/40 border-b border-zinc-800">
-                                        <span className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">
-                                            {group.category}
-                                        </span>
+                        <ul className="space-y-4 flex-1">
+                            {[
+                                "10K requests/month",
+                                "Community support",
+                                "Basic analytics",
+                                "Public endpoints",
+                            ].map((feat) => (
+                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-gray-400">
+                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 flex items-center justify-center">
+                                        <Check className="w-3 h-3 text-orange-500" strokeWidth={3} />
                                     </div>
-
-                                    {group.rows.map((row, ri) => (
-                                        <div
-                                            key={row.feature}
-                                            className={`grid grid-cols-4 px-6 py-4 hover:bg-zinc-800/30 transition-colors ${gi < comparisonFeatures.length - 1 || ri < group.rows.length - 1
-                                                    ? "border-b border-zinc-800/50"
-                                                    : ""
-                                                }`}
-                                        >
-                                            <span className="text-sm text-zinc-400">{row.feature}</span>
-                                            {[row.starter, row.pro, row.performance].map((val, j) => (
-                                                <div key={j} className="flex items-center justify-center">
-                                                    {typeof val === "boolean" ? (
-                                                        val ? (
-                                                            <Check className="w-4 h-4 text-orange-400" />
-                                                        ) : (
-                                                            <X className="w-4 h-4 text-zinc-700" />
-                                                        )
-                                                    ) : (
-                                                        <span className={`text-sm font-medium ${j === 1 ? "text-orange-400" : "text-zinc-300"}`}>
-                                                            {val}
-                                                        </span>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ))}
-                                </div>
+                                    {feat}
+                                </li>
                             ))}
+                        </ul>
+
+                        <button className="w-full py-3 mt-6 rounded-full text-sm font-semibold transition-all bg-white/10 hover:bg-white/20 text-white tracking-wide">
+                            Get Started
+                        </button>
+                    </div>
+
+                    {/* Card 2: Pro */}
+                    <div className="relative p-10 rounded-[2.5rem] border border-orange-500/50 bg-white/[0.04] flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300 shadow-[0_0_40px_-10px_rgba(234,88,12,0.15)] md:-rotate-1">
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 bg-orange-500 text-xs uppercase font-bold tracking-widest rounded-full shadow-lg">
+                            Most Popular
                         </div>
-                    </motion.div>
-                </section>
+                        <div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
+                            <p className="text-base text-gray-400 h-10">For growing teams and production apps</p>
+                            <div className="my-8">
+                                <span className="text-5xl font-bold text-white">${isAnnual ? "29" : "39"}</span>
+                                <span className="text-base text-gray-400 font-medium ml-1">/mo</span>
+                            </div>
+                        </div>
 
-                {/* FAQ */}
-                <section className="max-w-3xl mx-auto px-6 pb-24">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.7 }}
-                    >
-                        <h2 className="text-3xl font-bold tracking-tight text-white text-center mb-12">
-                            Frequently Asked Questions
-                        </h2>
+                        <ul className="space-y-4 flex-1">
+                            {[
+                                "100K requests/month",
+                                "Priority support",
+                                "Advanced analytics",
+                                "Private endpoints",
+                                "Custom domains",
+                            ].map((feat) => (
+                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-gray-200">
+                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center">
+                                        <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                                    </div>
+                                    {feat}
+                                </li>
+                            ))}
+                        </ul>
 
-                        <div className="space-y-3">
-                            {faqs.map((faq, i) => (
-                                <div
-                                    key={i}
-                                    className="rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden"
+                        <button className="w-full py-3 mt-6 rounded-full text-sm font-semibold transition-all bg-orange-500 hover:bg-orange-600 text-white shadow-[0_0_20px_rgba(234,88,12,0.4)] tracking-wide">
+                            Start Pro Trial
+                        </button>
+                    </div>
+
+                    {/* Card 3: Performance */}
+                    <div className="relative p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.02] flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300">
+                        <div>
+                            <h3 className="text-2xl font-bold text-white mb-2">Performance</h3>
+                            <p className="text-base text-gray-400 h-10">For enterprise-grade applications</p>
+                            <div className="my-8">
+                                <span className="text-5xl font-bold text-white">${isAnnual ? "129" : "149"}</span>
+                                <span className="text-base text-gray-400 font-medium ml-1">/mo</span>
+                            </div>
+                        </div>
+
+                        <ul className="space-y-4 flex-1">
+                            {[
+                                "Unlimited requests",
+                                "24/7 dedicated support",
+                                "Real-time monitoring",
+                                "SLA guarantees",
+                                "Custom infrastructure",
+                            ].map((feat) => (
+                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-gray-400">
+                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/80 flex items-center justify-center">
+                                        <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                                    </div>
+                                    {feat}
+                                </li>
+                            ))}
+                        </ul>
+
+                        <button className="w-full py-3 mt-6 rounded-full text-sm font-semibold transition-all bg-white/10 hover:bg-white/20 text-white tracking-wide">
+                            Contact Sales
+                        </button>
+                    </div>
+
+                </div>
+
+                {/* Feature Comparison Table */}
+                <div className="w-full max-w-5xl mb-32 [animation:fadeSlideIn_1s_ease-out_1.8s_both]">
+                    <h2 className="text-3xl font-bold text-white mb-12 text-center">Compare Plans</h2>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left">
+                            <thead>
+                                <tr className="border-b border-white/10">
+                                    <th className="py-4 pl-6 text-sm font-medium text-gray-400">Feature</th>
+                                    <th className="py-4 px-6 text-sm font-semibold text-white text-center w-32 md:w-40">Starter</th>
+                                    <th className="py-4 px-6 text-sm font-semibold text-white text-center w-32 md:w-40">Pro</th>
+                                    <th className="py-4 px-6 text-sm font-semibold text-white text-center w-32 md:w-40">Performance</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-sm">
+                                {/* Infrastructure */}
+                                <tr>
+                                    <td colSpan={4} className="py-5 pl-6 text-sm font-bold tracking-widest text-orange-500 uppercase bg-white/[0.02]">
+                                        Infrastructure
+                                    </td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="py-5 pl-6 text-gray-300">Monthly requests</td>
+                                    <td className="py-5 text-center text-gray-400">10K</td>
+                                    <td className="py-5 text-center text-white font-semibold">100K</td>
+                                    <td className="py-5 text-center text-white font-semibold">Unlimited</td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="py-5 pl-6 text-gray-300">Private endpoints</td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center"><Check className="w-5 h-5 text-orange-500 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center"><Check className="w-5 h-5 text-orange-500 mx-auto" strokeWidth={3} /></td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="py-5 pl-6 text-gray-300">Custom domains</td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center text-white font-semibold">1</td>
+                                    <td className="py-5 text-center text-white font-semibold">Unlimited</td>
+                                </tr>
+
+                                {/* Support & SLA */}
+                                <tr>
+                                    <td colSpan={4} className="py-5 pl-6 text-sm font-bold tracking-widest text-orange-500 uppercase bg-white/[0.02] mt-6 border-t border-white/5">
+                                        Support & Security
+                                    </td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="py-5 pl-6 text-gray-300">Support channel</td>
+                                    <td className="py-5 text-center text-gray-400">Community</td>
+                                    <td className="py-5 text-center text-white font-semibold">Standard</td>
+                                    <td className="py-5 text-center text-orange-400 font-bold">24/7 Dedicated</td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="py-5 pl-6 text-gray-300">Analytics</td>
+                                    <td className="py-5 text-center text-gray-400">Basic</td>
+                                    <td className="py-5 text-center text-white font-semibold">Advanced</td>
+                                    <td className="py-5 text-center text-white font-semibold">Real-time</td>
+                                </tr>
+                                <tr className="border-b border-white/5">
+                                    <td className="py-5 pl-6 text-gray-300">SLA guarantee</td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center"><Check className="w-5 h-5 text-orange-500 mx-auto" strokeWidth={3} /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {/* FAQ Section */}
+                <div className="w-full max-w-4xl mb-16 [animation:fadeSlideIn_1s_ease-out_2s_both]">
+                    <h2 className="text-3xl font-bold text-white mb-10 text-center">Frequently asked questions</h2>
+                    <div className="space-y-4">
+                        {FAQS.map((faq, i) => (
+                            <div
+                                key={i}
+                                className="border border-white/5 bg-white/[0.02] rounded-2xl overflow-hidden transition-colors hover:bg-white/[0.04]"
+                            >
+                                <button
+                                    onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
+                                    className="w-full flex items-center justify-between p-6 text-left"
                                 >
-                                    <button
-                                        onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                                        className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-zinc-800/50 transition-colors"
-                                    >
-                                        <span className="text-sm font-semibold text-white">{faq.q}</span>
-                                        <ChevronDown
-                                            className={`w-4 h-4 text-zinc-500 flex-shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""
-                                                }`}
-                                        />
-                                    </button>
-                                    {openFaq === i && (
-                                        <div className="px-6 pb-5 border-t border-zinc-800/60">
-                                            <p className="text-sm text-zinc-400 leading-relaxed pt-4">{faq.a}</p>
-                                        </div>
+                                    <span className="text-sm font-semibold text-white">{faq.q}</span>
+                                    <ChevronDown className={cn("w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0", openFaqIndex === i ? "rotate-180" : "")} />
+                                </button>
+                                <div
+                                    className={cn(
+                                        "px-6 text-sm text-gray-400 overflow-hidden transition-all duration-300 leading-relaxed max-w-3xl",
+                                        openFaqIndex === i ? "max-h-40 pb-7 opacity-100" : "max-h-0 opacity-0"
                                     )}
+                                >
+                                    {faq.a}
                                 </div>
-                            ))}
-                        </div>
-                    </motion.div>
-                </section>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </main>
 
             {/* Footer */}
-            <footer className="relative z-10 border-t border-zinc-800 bg-zinc-950/80">
-                <div className="max-w-7xl mx-auto px-6 py-16">
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-12">
-                        <div className="md:col-span-2">
-                            <div className="flex items-center gap-2.5 mb-4">
+            <footer className="relative z-10 border-t border-white/5 bg-zinc-950 mt-auto">
+                <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+                        <div className="md:col-span-1">
+                            <div className="flex items-center gap-3 mb-4">
                                 <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
-                                    <Zap className="w-4 h-4 text-white" />
+                                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                                    </svg>
                                 </div>
-                                <span className="font-bold text-white text-xl tracking-tight">NebulaNow</span>
+                                <span className="text-base font-semibold text-white tracking-tight">NebulaNow</span>
                             </div>
                             <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
                                 The unified infrastructure layer for the decentralized web.
                             </p>
                         </div>
-                        {[
-                            { title: "About Us", items: ["Mission", "Team", "Newsletter", "Careers"] },
-                            { title: "Support", items: ["Contact", "Refund Policy", "FAQ's", "Status"] },
-                            { title: "Social", items: ["Instagram", "LinkedIn", "YouTube", "Twitter"] },
-                        ].map((col) => (
-                            <div key={col.title}>
-                                <h4 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">{col.title}</h4>
-                                <ul className="space-y-3">
-                                    {col.items.map((item) => (
-                                        <li key={item}>
-                                            <Link href="#" className="text-sm text-zinc-500 hover:text-white transition-colors">
-                                                {item}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
                     </div>
-                    <div className="mt-12 pt-8 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <p className="text-xs text-zinc-600">
-                            Copyright © NebulaNow ·{" "}
-                            <Link href="#" className="hover:text-zinc-400 transition-colors">Terms of Service</Link>
-                        </p>
-                        <button
-                            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                            className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors"
-                        >
-                            Back to top ↑
-                        </button>
+                    <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p className="text-sm text-zinc-600">Copyright © NebulaNow</p>
                     </div>
                 </div>
             </footer>

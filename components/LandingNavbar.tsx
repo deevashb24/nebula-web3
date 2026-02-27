@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
     { label: "Product", href: "/product" },
@@ -16,89 +16,89 @@ export default function LandingNavbar() {
 
     return (
         <>
-            {/* Top announcement banner */}
-            <div className="bg-orange-500/10 border-b border-orange-500/20 text-center py-2.5 px-4">
-                <p className="text-xs font-medium text-orange-400 tracking-wide">
-                    <span className="inline-flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse inline-block" />
-                        New release: Nebula Protocol v2.0 —{" "}
-                        <Link href="#" className="underline underline-offset-2 hover:text-orange-300 transition-colors">
-                            Read the announcement
-                        </Link>
-                    </span>
-                </p>
-            </div>
+            {/* Desktop: Floating pill navbar — exact reference structure */}
+            <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-[100] mt-6 w-max hidden md:flex items-center gap-8 py-2 px-3 rounded-full border border-white/5 bg-white/5 backdrop-blur-md">
 
-            {/* Navbar */}
-            <header className="sticky top-0 z-50 border-b border-zinc-800/60 bg-[#09090b]/90 backdrop-blur-xl">
-                <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
-
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center shadow-orange-sm group-hover:shadow-orange transition-shadow">
-                            <Zap className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="font-bold text-white text-lg tracking-tight">Nebula</span>
-                    </Link>
-
-                    {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-1">
-                        {NAV_LINKS.map(({ label, href }) => (
-                            <Link
-                                key={label}
-                                href={href}
-                                className="px-4 py-2 rounded-lg text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-all duration-200"
-                            >
-                                {label}
-                            </Link>
-                        ))}
-                    </nav>
-
-                    {/* Right actions */}
-                    <div className="hidden md:flex items-center gap-3">
-                        <Link
-                            href="#"
-                            className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"
-                        >
-                            Sign in
-                        </Link>
-                        <Link
-                            href="/pricing"
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black text-sm font-bold hover:bg-zinc-100 transition-all duration-200 tracking-wide uppercase"
-                        >
-                            Request Demo
-                        </Link>
+                {/* Logo */}
+                <Link href="/" className="flex items-center gap-2 pl-2">
+                    <div className="w-6 h-6 rounded-lg bg-orange-500 flex items-center justify-center">
+                        <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                        </svg>
                     </div>
+                    <span className="text-sm font-medium text-white tracking-tight">Nebula</span>
+                </Link>
 
-                    {/* Mobile toggle */}
+                {/* Nav links — exact: text-xs font-medium text-gray-400 hover:text-white */}
+                {NAV_LINKS.map(({ label, href }) => (
+                    <Link
+                        key={label}
+                        href={href}
+                        className="text-xs font-medium text-gray-400 hover:text-white transition-colors tracking-wide"
+                    >
+                        {label}
+                    </Link>
+                ))}
+
+                {/* Sign in */}
+                <Link
+                    href="#"
+                    className="text-xs font-medium text-gray-400 hover:text-white transition-colors tracking-wide pl-2"
+                >
+                    Sign in
+                </Link>
+
+                {/* Request Demo — exact reference: rounded-full with glow border effect */}
+                <Link
+                    href="/pricing"
+                    className="group inline-flex overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] rounded-full relative items-center justify-center"
+                >
+                    {/* Gradient border glow */}
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-br from-white/30 via-white/10 to-white/5" />
+                    <span className="relative z-10 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-zinc-900 text-xs font-semibold text-white tracking-wide m-[1px]">
+                        Request Demo
+                    </span>
+                </Link>
+            </nav>
+
+            {/* Mobile navbar */}
+            <header className="md:hidden fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-zinc-950/90 backdrop-blur-xl">
+                <div className="flex items-center justify-between px-6 py-4">
+                    <Link href="/" className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center">
+                            <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                            </svg>
+                        </div>
+                        <span className="text-base font-semibold text-white">Nebula</span>
+                    </Link>
                     <button
-                        className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                        className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.04] transition-colors"
                         onClick={() => setMobileOpen(!mobileOpen)}
                     >
                         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                     </button>
                 </div>
 
-                {/* Mobile menu */}
                 {mobileOpen && (
-                    <div className="md:hidden border-t border-zinc-800 bg-[#09090b] px-6 py-4 space-y-1">
+                    <div className="border-t border-white/5 bg-zinc-950 px-6 py-4 space-y-2">
                         {NAV_LINKS.map(({ label, href }) => (
                             <Link
                                 key={label}
                                 href={href}
-                                className="block px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                                className="block px-3 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/[0.04] transition-colors"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 {label}
                             </Link>
                         ))}
-                        <div className="pt-3 border-t border-zinc-800 mt-3 flex flex-col gap-2">
-                            <Link href="#" className="px-4 py-3 text-sm font-medium text-zinc-400 hover:text-white transition-colors">
+                        <div className="pt-4 border-t border-white/5 mt-4 flex flex-col gap-3">
+                            <Link href="#" className="flex justify-center py-3 text-base font-medium text-gray-300 hover:text-white transition-colors">
                                 Sign in
                             </Link>
                             <Link
                                 href="/pricing"
-                                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black text-sm font-bold hover:bg-zinc-100 transition-all duration-200 tracking-wide uppercase"
+                                className="inline-flex items-center justify-center py-3.5 px-6 rounded-full bg-white text-black text-sm font-bold uppercase tracking-widest hover:bg-zinc-100 transition-all"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 Request Demo
@@ -107,6 +107,11 @@ export default function LandingNavbar() {
                     </div>
                 )}
             </header>
+
+            {/* Spacer for mobile header */}
+            <div className="md:hidden h-[65px]" />
+            {/* Spacer for desktop pill nav */}
+            <div className="hidden md:block h-[88px]" />
         </>
     );
 }

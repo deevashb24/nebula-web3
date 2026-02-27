@@ -1,7 +1,9 @@
-import React from 'react';
+import { Inter } from 'next/font/google';
 import type { Metadata } from 'next';
 import "./globals.css";
 import Web3Provider from "@/components/providers/web3-provider";
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: "Nebula — Web3 Productivity Protocol",
@@ -14,13 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-      </head>
-      <body className="bg-[#09090b] text-white antialiased" style={{ fontFamily: "'Geist', 'Manrope', 'Inter', system-ui, sans-serif" }}>
+    <html lang="en" className={inter.variable}>
+      <body className="bg-[#09090b] text-white antialiased font-sans">
         <Web3Provider>
           {children}
         </Web3Provider>
