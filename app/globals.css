@@ -7,24 +7,25 @@
 @tailwind utilities;
 
 :root {
-  --background: #09090b;
+  --background: #ffffff;
+  /* white */
+  --foreground: #09090b;
   /* zinc-950 */
-  --foreground: #ffffff;
   --primary: #f97316;
   /* orange-500 */
-  --primary-glow: rgba(249, 115, 22, 0.3);
+  --primary-glow: rgba(249, 115, 22, 0.15);
   --secondary: #ea580c;
   /* orange-600 */
   --accent: #fb923c;
   /* orange-400 */
   --muted: #71717a;
   /* zinc-500 */
-  --glass-bg: rgba(24, 24, 27, 0.6);
-  /* zinc-900/60 */
-  --glass-border: rgba(63, 63, 70, 1);
-  /* zinc-700 */
-  --card-bg: #18181b;
-  /* zinc-900 */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  /* white/70 */
+  --glass-border: rgba(228, 228, 231, 1);
+  /* zinc-200 */
+  --card-bg: #ffffff;
+  /* white */
 }
 
 * {
@@ -55,8 +56,8 @@ main {
 /* Noise texture overlay */
 .noise-overlay {
   background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-  mix-blend-mode: overlay;
-  opacity: 0.4;
+  mix-blend-mode: multiply;
+  opacity: 0.15;
   pointer-events: none;
 }
 
@@ -68,11 +69,13 @@ main {
   border: 1px solid var(--glass-border);
   border-radius: 1rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
 }
 
 .glass:hover {
-  background: rgba(39, 39, 42, 0.6);
-  border-color: rgba(113, 113, 122, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(212, 212, 216, 1);
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.1);
 }
 
 /* Orange glow effect */

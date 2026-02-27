@@ -9,15 +9,15 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                primary: "bg-orange-500 text-white hover:bg-orange-600 shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:shadow-orange hover:scale-[1.02]",
-                secondary: "bg-zinc-800 text-white border border-zinc-700 hover:bg-zinc-700 hover:border-zinc-600",
-                glow: "bg-orange-500 text-white shadow-orange hover:bg-orange-600 hover:shadow-orange-lg hover:scale-[1.02]",
-                glass: "bg-white/[0.04] backdrop-blur-xl border border-white/10 text-white hover:bg-white/[0.08] hover:border-orange-500/30",
-                ghost: "bg-transparent hover:bg-white/[0.04] text-zinc-400 hover:text-white border border-transparent hover:border-zinc-700",
-                outline: "border border-zinc-700 text-white bg-transparent hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400",
-                white: "bg-white text-black font-bold hover:bg-zinc-100",
-                monochrome: "bg-white text-black hover:bg-zinc-100 font-semibold",
-                default: "bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800",
+                primary: "bg-orange-500 text-white hover:bg-orange-600 shadow-[0_4px_15px_rgba(234,88,12,0.3)] hover:shadow-[0_6px_25px_rgba(234,88,12,0.4)] hover:-translate-y-0.5",
+                secondary: "bg-zinc-100 text-zinc-900 border border-zinc-200 hover:bg-zinc-200 hover:border-zinc-300 shadow-sm",
+                glow: "bg-gradient-to-r from-orange-400 to-orange-600 text-white shadow-[0_0_20px_rgba(234,88,12,0.4)] hover:shadow-[0_0_30px_rgba(234,88,12,0.6)] hover:-translate-y-0.5",
+                glass: "bg-white/60 backdrop-blur-xl border border-zinc-200 text-zinc-900 hover:bg-white/90 hover:border-orange-500/30 shadow-sm",
+                ghost: "bg-transparent hover:bg-zinc-100 text-zinc-600 hover:text-zinc-900 border border-transparent hover:border-zinc-200",
+                outline: "border border-zinc-200 text-zinc-900 bg-transparent hover:border-orange-500/50 hover:bg-orange-50 hover:text-orange-600",
+                white: "bg-zinc-900 text-white font-bold hover:bg-zinc-800 shadow-md",
+                monochrome: "bg-zinc-900 text-white hover:bg-zinc-800 font-semibold shadow-sm",
+                default: "bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 shadow-sm",
             },
             size: {
                 sm: "h-9 px-4 text-xs rounded-lg",

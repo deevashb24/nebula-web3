@@ -26,19 +26,19 @@ export default function Navbar() {
 
     return (
         <>
-            <header className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-800/60 bg-zinc-950/80 backdrop-blur-xl">
-                <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+            <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-zinc-950/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+                <div className="flex items-center justify-between px-8 py-5 max-w-7xl mx-auto">
 
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center shadow-orange-sm group-hover:shadow-orange transition-shadow">
-                            <Zap className="w-4 h-4 text-white" />
+                    <Link href="/" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center shadow-[0_0_20px_rgba(234,88,12,0.4)] group-hover:shadow-[0_0_30px_rgba(234,88,12,0.6)] transition-all duration-300">
+                            <Zap className="w-5 h-5 text-white" />
                         </div>
-                        <span className="font-bold text-white text-lg tracking-tight">Nebula</span>
+                        <span className="font-bold text-white text-xl tracking-tight">Nebula</span>
                     </Link>
 
                     {/* Desktop Nav */}
-                    <nav className="hidden md:flex items-center gap-1">
+                    <nav className="hidden md:flex items-center gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10">
                         {NAV_LINKS.map(({ label, href }) => {
                             const isActive = pathname === href || pathname?.startsWith(href + '/');
                             return (
@@ -46,9 +46,9 @@ export default function Navbar() {
                                     key={label}
                                     href={href}
                                     className={cn(
-                                        "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                                        "px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300",
                                         isActive
-                                            ? "text-white bg-white/8 border border-white/10"
+                                            ? "text-white bg-white/10 shadow-sm"
                                             : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
                                     )}
                                 >
@@ -59,19 +59,27 @@ export default function Navbar() {
                     </nav>
 
                     {/* Auth */}
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                         {authenticated ? (
-                            <div className="flex items-center gap-3">
-                                <span className="hidden md:block text-xs text-zinc-400 font-mono px-3 py-1.5 rounded-lg bg-zinc-800/60 border border-zinc-700">
+                            <div className="flex items-center gap-4">
+                                <span className="hidden md:block text-sm text-zinc-300 font-mono px-4 py-2 rounded-xl bg-white/5 border border-white/10">
                                     {shortAddress}
                                 </span>
-                                <Button variant="ghost" size="sm" onClick={() => logout()}>
+                                <Button variant="ghost" size="md" className="font-semibold px-5 rounded-xl hover:bg-white/5" onClick={() => logout()}>
                                     Sign Out
                                 </Button>
                             </div>
                         ) : (
-                            <Button variant="glow" size="sm" onClick={() => login()} className="gap-2">
-                                Connect Wallet
+                            <Button
+                                variant="glow"
+                                size="md"
+                                onClick={() => login()}
+                                className="group relative overflow-hidden bg-zinc-950 font-bold px-8 py-2.5 rounded-full border-0 p-[2px] transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)]"
+                            >
+                                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 animate-gradient-xy" />
+                                <span className="relative z-10 w-full h-full flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-zinc-950 text-white transition-colors group-hover:bg-transparent">
+                                    Sign In
+                                </span>
                             </Button>
                         )}
 
@@ -87,12 +95,12 @@ export default function Navbar() {
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden border-t border-zinc-800 bg-zinc-950 px-6 py-4 space-y-1">
+                    <div className="md:hidden border-t border-white/10 bg-zinc-950/95 backdrop-blur-2xl px-6 py-4 space-y-2 shadow-2xl">
                         {NAV_LINKS.map(({ label, href }) => (
                             <Link
                                 key={label}
                                 href={href}
-                                className="block px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                                className="block px-4 py-3.5 rounded-2xl text-base font-semibold text-zinc-300 hover:text-white hover:bg-white/10 transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 {label}
@@ -102,7 +110,7 @@ export default function Navbar() {
                 )}
             </header>
             {/* Spacer */}
-            <div className="h-[73px]" />
+            <div className="h-[90px]" />
         </>
     );
 }

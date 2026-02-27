@@ -33,7 +33,7 @@ export default function PricingPage() {
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
     return (
-        <div className="flex flex-col bg-zinc-950 min-h-screen selection:bg-orange-500/30 selection:text-orange-200 overflow-x-hidden">
+        <div className="flex flex-col bg-white min-h-screen selection:bg-orange-500/20 selection:text-orange-900 overflow-x-hidden">
 
             {/* Noise texture — exact reference */}
             <div className="fixed inset-0 pointer-events-none z-0 opacity-40 mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
@@ -44,31 +44,31 @@ export default function PricingPage() {
             {/* Floating pill navbar */}
             <LandingNavbar />
 
-            <main className="relative z-10 flex flex-col items-center pt-32 pb-24 md:pt-36 max-w-7xl mx-auto w-full px-6">
+            <main className="relative z-10 flex flex-col items-center pt-40 md:pt-48 pb-32 max-w-7xl mx-auto w-full px-6">
 
                 {/* Header section */}
                 <div className="text-center max-w-3xl mb-16">
-                    <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-gray-300 text-sm font-medium mb-8">
+                    <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-orange-600 text-sm font-medium mb-8 shadow-sm">
                         <svg className="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
                         Simple, transparent pricing
                     </div>
 
-                    <h1 className="[animation:fadeSlideIn_1s_ease-out_1s_both] text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
+                    <h1 className="[animation:fadeSlideIn_1s_ease-out_1s_both] text-5xl md:text-6xl font-bold tracking-tight text-zinc-900 mb-6">
                         Build without limits
                     </h1>
-                    <p className="[animation:fadeSlideIn_1s_ease-out_1.2s_both] text-gray-400 text-base md:text-lg max-w-xl mx-auto mb-10">
+                    <p className="[animation:fadeSlideIn_1s_ease-out_1.2s_both] text-zinc-600 text-base md:text-lg max-w-xl mx-auto mb-10">
                         Choose the perfect plan for your project. Scale as you grow with our flexible infrastructure options.
                     </p>
 
                     {/* Toggle */}
-                    <div className="[animation:fadeSlideIn_1s_ease-out_1.4s_both] inline-flex items-center p-1 bg-white/5 border border-white/10 rounded-full">
+                    <div className="[animation:fadeSlideIn_1s_ease-out_1.4s_both] inline-flex items-center p-1 bg-zinc-100 border border-zinc-200 rounded-full">
                         <button
                             onClick={() => setIsAnnual(false)}
                             className={cn(
                                 "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300",
-                                !isAnnual ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-white"
+                                !isAnnual ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-900"
                             )}
                         >
                             Monthly
@@ -77,13 +77,13 @@ export default function PricingPage() {
                             onClick={() => setIsAnnual(true)}
                             className={cn(
                                 "px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-3",
-                                isAnnual ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-white"
+                                isAnnual ? "bg-white text-zinc-900 shadow-sm" : "text-zinc-500 hover:text-zinc-900"
                             )}
                         >
                             Annual
                             <span className={cn(
                                 "text-[11px] px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold",
-                                isAnnual ? "bg-orange-100 text-orange-600" : "bg-orange-500/20 text-orange-400"
+                                isAnnual ? "bg-orange-100 text-orange-600" : "bg-orange-50 text-orange-400"
                             )}>
                                 Save 20%
                             </span>
@@ -95,13 +95,13 @@ export default function PricingPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mb-32 [animation:fadeSlideIn_1s_ease-out_1.6s_both]">
 
                     {/* Card 1: Starter */}
-                    <div className="relative p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.02] flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300">
+                    <div className="relative p-10 rounded-[2.5rem] border border-zinc-200 bg-white flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300 shadow-sm hover:shadow-md">
                         <div>
-                            <h3 className="text-2xl font-bold text-white mb-2">Starter</h3>
-                            <p className="text-base text-gray-400 h-10">For individuals and small projects</p>
+                            <h3 className="text-2xl font-bold text-zinc-900 mb-2">Starter</h3>
+                            <p className="text-base text-zinc-500 h-10">For individuals and small projects</p>
                             <div className="my-8">
-                                <span className="text-5xl font-bold text-white">$0</span>
-                                <span className="text-base text-gray-400 font-medium ml-1">/mo</span>
+                                <span className="text-5xl font-bold text-zinc-900">$0</span>
+                                <span className="text-base text-zinc-500 font-medium ml-1">/mo</span>
                             </div>
                         </div>
 
@@ -112,8 +112,8 @@ export default function PricingPage() {
                                 "Basic analytics",
                                 "Public endpoints",
                             ].map((feat) => (
-                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-gray-400">
-                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 flex items-center justify-center">
+                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-zinc-600">
+                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center">
                                         <Check className="w-3 h-3 text-orange-500" strokeWidth={3} />
                                     </div>
                                     {feat}
@@ -121,22 +121,22 @@ export default function PricingPage() {
                             ))}
                         </ul>
 
-                        <button className="w-full py-3 mt-6 rounded-full text-sm font-semibold transition-all bg-white/10 hover:bg-white/20 text-white tracking-wide">
+                        <button className="w-full py-4 mt-8 rounded-full text-base font-semibold transition-all bg-zinc-100 hover:bg-zinc-200 text-zinc-900 tracking-wide">
                             Get Started
                         </button>
                     </div>
 
                     {/* Card 2: Pro */}
-                    <div className="relative p-10 rounded-[2.5rem] border border-orange-500/50 bg-white/[0.04] flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300 shadow-[0_0_40px_-10px_rgba(234,88,12,0.15)] md:-rotate-1">
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 bg-orange-500 text-xs uppercase font-bold tracking-widest rounded-full shadow-lg">
+                    <div className="relative p-10 rounded-[2.5rem] border border-orange-200 bg-white flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300 shadow-[0_8px_30px_-10px_rgba(234,88,12,0.15)] hover:shadow-[0_12px_40px_-10px_rgba(234,88,12,0.2)] md:-rotate-1">
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 bg-orange-500 text-xs uppercase font-bold tracking-widest rounded-full shadow-lg text-white">
                             Most Popular
                         </div>
                         <div>
-                            <h3 className="text-2xl font-bold text-white mb-2">Pro</h3>
-                            <p className="text-base text-gray-400 h-10">For growing teams and production apps</p>
+                            <h3 className="text-2xl font-bold text-zinc-900 mb-2">Pro</h3>
+                            <p className="text-base text-zinc-500 h-10">For growing teams and production apps</p>
                             <div className="my-8">
-                                <span className="text-5xl font-bold text-white">${isAnnual ? "29" : "39"}</span>
-                                <span className="text-base text-gray-400 font-medium ml-1">/mo</span>
+                                <span className="text-5xl font-bold text-zinc-900">${isAnnual ? "29" : "39"}</span>
+                                <span className="text-base text-zinc-500 font-medium ml-1">/mo</span>
                             </div>
                         </div>
 
@@ -148,7 +148,7 @@ export default function PricingPage() {
                                 "Private endpoints",
                                 "Custom domains",
                             ].map((feat) => (
-                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-gray-200">
+                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-zinc-700">
                                     <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center">
                                         <Check className="w-3 h-3 text-white" strokeWidth={3} />
                                     </div>
@@ -157,19 +157,20 @@ export default function PricingPage() {
                             ))}
                         </ul>
 
-                        <button className="w-full py-3 mt-6 rounded-full text-sm font-semibold transition-all bg-orange-500 hover:bg-orange-600 text-white shadow-[0_0_20px_rgba(234,88,12,0.4)] tracking-wide">
-                            Start Pro Trial
+                        <button className="relative w-full py-4 mt-8 rounded-full text-base font-bold text-white transition-all shadow-[0_4px_20px_rgba(234,88,12,0.3)] hover:shadow-[0_6px_30px_rgba(234,88,12,0.4)] hover:-translate-y-1 overflow-hidden group">
+                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 animate-gradient-xy"></span>
+                            <span className="relative z-10 tracking-wide uppercase">Start Pro Trial</span>
                         </button>
                     </div>
 
                     {/* Card 3: Performance */}
-                    <div className="relative p-10 rounded-[2.5rem] border border-white/5 bg-white/[0.02] flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300">
+                    <div className="relative p-10 rounded-[2.5rem] border border-zinc-200 bg-white flex flex-col gap-8 transition-transform hover:scale-[1.02] duration-300 shadow-sm hover:shadow-md">
                         <div>
-                            <h3 className="text-2xl font-bold text-white mb-2">Performance</h3>
-                            <p className="text-base text-gray-400 h-10">For enterprise-grade applications</p>
+                            <h3 className="text-2xl font-bold text-zinc-900 mb-2">Performance</h3>
+                            <p className="text-base text-zinc-500 h-10">For enterprise-grade applications</p>
                             <div className="my-8">
-                                <span className="text-5xl font-bold text-white">${isAnnual ? "129" : "149"}</span>
-                                <span className="text-base text-gray-400 font-medium ml-1">/mo</span>
+                                <span className="text-5xl font-bold text-zinc-900">${isAnnual ? "129" : "149"}</span>
+                                <span className="text-base text-zinc-500 font-medium ml-1">/mo</span>
                             </div>
                         </div>
 
@@ -181,8 +182,8 @@ export default function PricingPage() {
                                 "SLA guarantees",
                                 "Custom infrastructure",
                             ].map((feat) => (
-                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-gray-400">
-                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/80 flex items-center justify-center">
+                                <li key={feat} className="flex items-center gap-3 text-sm font-medium text-zinc-600">
+                                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500 flex items-center justify-center">
                                         <Check className="w-3 h-3 text-white" strokeWidth={3} />
                                     </div>
                                     {feat}
@@ -190,7 +191,7 @@ export default function PricingPage() {
                             ))}
                         </ul>
 
-                        <button className="w-full py-3 mt-6 rounded-full text-sm font-semibold transition-all bg-white/10 hover:bg-white/20 text-white tracking-wide">
+                        <button className="w-full py-4 mt-8 rounded-full text-base font-semibold transition-all bg-zinc-100 hover:bg-zinc-200 text-zinc-900 tracking-wide">
                             Contact Sales
                         </button>
                     </div>
@@ -199,65 +200,65 @@ export default function PricingPage() {
 
                 {/* Feature Comparison Table */}
                 <div className="w-full max-w-5xl mb-32 [animation:fadeSlideIn_1s_ease-out_1.8s_both]">
-                    <h2 className="text-3xl font-bold text-white mb-12 text-center">Compare Plans</h2>
+                    <h2 className="text-3xl font-bold text-zinc-900 mb-12 text-center">Compare Plans</h2>
                     <div className="overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
-                                <tr className="border-b border-white/10">
-                                    <th className="py-4 pl-6 text-sm font-medium text-gray-400">Feature</th>
-                                    <th className="py-4 px-6 text-sm font-semibold text-white text-center w-32 md:w-40">Starter</th>
-                                    <th className="py-4 px-6 text-sm font-semibold text-white text-center w-32 md:w-40">Pro</th>
-                                    <th className="py-4 px-6 text-sm font-semibold text-white text-center w-32 md:w-40">Performance</th>
+                                <tr className="border-b border-zinc-200">
+                                    <th className="py-4 pl-6 text-sm font-medium text-zinc-500">Feature</th>
+                                    <th className="py-4 px-6 text-sm font-semibold text-zinc-900 text-center w-32 md:w-40">Starter</th>
+                                    <th className="py-4 px-6 text-sm font-semibold text-zinc-900 text-center w-32 md:w-40">Pro</th>
+                                    <th className="py-4 px-6 text-sm font-semibold text-zinc-900 text-center w-32 md:w-40">Performance</th>
                                 </tr>
                             </thead>
                             <tbody className="text-sm">
                                 {/* Infrastructure */}
                                 <tr>
-                                    <td colSpan={4} className="py-5 pl-6 text-sm font-bold tracking-widest text-orange-500 uppercase bg-white/[0.02]">
+                                    <td colSpan={4} className="py-5 pl-6 text-sm font-bold tracking-widest text-orange-500 uppercase bg-zinc-50">
                                         Infrastructure
                                     </td>
                                 </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="py-5 pl-6 text-gray-300">Monthly requests</td>
-                                    <td className="py-5 text-center text-gray-400">10K</td>
-                                    <td className="py-5 text-center text-white font-semibold">100K</td>
-                                    <td className="py-5 text-center text-white font-semibold">Unlimited</td>
+                                <tr className="border-b border-zinc-100">
+                                    <td className="py-5 pl-6 text-zinc-600">Monthly requests</td>
+                                    <td className="py-5 text-center text-zinc-500">10K</td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">100K</td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">Unlimited</td>
                                 </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="py-5 pl-6 text-gray-300">Private endpoints</td>
-                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
+                                <tr className="border-b border-zinc-100">
+                                    <td className="py-5 pl-6 text-zinc-600">Private endpoints</td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-zinc-300 mx-auto" strokeWidth={3} /></td>
                                     <td className="py-5 text-center"><Check className="w-5 h-5 text-orange-500 mx-auto" strokeWidth={3} /></td>
                                     <td className="py-5 text-center"><Check className="w-5 h-5 text-orange-500 mx-auto" strokeWidth={3} /></td>
                                 </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="py-5 pl-6 text-gray-300">Custom domains</td>
-                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
-                                    <td className="py-5 text-center text-white font-semibold">1</td>
-                                    <td className="py-5 text-center text-white font-semibold">Unlimited</td>
+                                <tr className="border-b border-zinc-100">
+                                    <td className="py-5 pl-6 text-zinc-600">Custom domains</td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-zinc-300 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">1</td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">Unlimited</td>
                                 </tr>
 
                                 {/* Support & SLA */}
                                 <tr>
-                                    <td colSpan={4} className="py-5 pl-6 text-sm font-bold tracking-widest text-orange-500 uppercase bg-white/[0.02] mt-6 border-t border-white/5">
+                                    <td colSpan={4} className="py-5 pl-6 text-sm font-bold tracking-widest text-orange-500 uppercase bg-zinc-50 mt-6 border-t border-zinc-100">
                                         Support & Security
                                     </td>
                                 </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="py-5 pl-6 text-gray-300">Support channel</td>
-                                    <td className="py-5 text-center text-gray-400">Community</td>
-                                    <td className="py-5 text-center text-white font-semibold">Standard</td>
-                                    <td className="py-5 text-center text-orange-400 font-bold">24/7 Dedicated</td>
+                                <tr className="border-b border-zinc-100">
+                                    <td className="py-5 pl-6 text-zinc-600">Support channel</td>
+                                    <td className="py-5 text-center text-zinc-500">Community</td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">Standard</td>
+                                    <td className="py-5 text-center text-orange-500 font-bold">24/7 Dedicated</td>
                                 </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="py-5 pl-6 text-gray-300">Analytics</td>
-                                    <td className="py-5 text-center text-gray-400">Basic</td>
-                                    <td className="py-5 text-center text-white font-semibold">Advanced</td>
-                                    <td className="py-5 text-center text-white font-semibold">Real-time</td>
+                                <tr className="border-b border-zinc-100">
+                                    <td className="py-5 pl-6 text-zinc-600">Analytics</td>
+                                    <td className="py-5 text-center text-zinc-500">Basic</td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">Advanced</td>
+                                    <td className="py-5 text-center text-zinc-900 font-semibold">Real-time</td>
                                 </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="py-5 pl-6 text-gray-300">SLA guarantee</td>
-                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
-                                    <td className="py-5 text-center"><X className="w-5 h-5 text-gray-600 mx-auto" strokeWidth={3} /></td>
+                                <tr className="border-b border-zinc-100">
+                                    <td className="py-5 pl-6 text-zinc-600">SLA guarantee</td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-zinc-300 mx-auto" strokeWidth={3} /></td>
+                                    <td className="py-5 text-center"><X className="w-5 h-5 text-zinc-300 mx-auto" strokeWidth={3} /></td>
                                     <td className="py-5 text-center"><Check className="w-5 h-5 text-orange-500 mx-auto" strokeWidth={3} /></td>
                                 </tr>
                             </tbody>
@@ -267,23 +268,23 @@ export default function PricingPage() {
 
                 {/* FAQ Section */}
                 <div className="w-full max-w-4xl mb-16 [animation:fadeSlideIn_1s_ease-out_2s_both]">
-                    <h2 className="text-3xl font-bold text-white mb-10 text-center">Frequently asked questions</h2>
+                    <h2 className="text-3xl font-bold text-zinc-900 mb-10 text-center">Frequently asked questions</h2>
                     <div className="space-y-4">
                         {FAQS.map((faq, i) => (
                             <div
                                 key={i}
-                                className="border border-white/5 bg-white/[0.02] rounded-2xl overflow-hidden transition-colors hover:bg-white/[0.04]"
+                                className="border border-zinc-200 bg-white rounded-2xl overflow-hidden transition-colors hover:bg-zinc-50 shadow-sm"
                             >
                                 <button
                                     onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
                                     className="w-full flex items-center justify-between p-6 text-left"
                                 >
-                                    <span className="text-sm font-semibold text-white">{faq.q}</span>
-                                    <ChevronDown className={cn("w-5 h-5 text-gray-500 transition-transform duration-300 flex-shrink-0", openFaqIndex === i ? "rotate-180" : "")} />
+                                    <span className="text-sm font-bold text-zinc-900">{faq.q}</span>
+                                    <ChevronDown className={cn("w-5 h-5 text-zinc-400 transition-transform duration-300 flex-shrink-0", openFaqIndex === i ? "rotate-180" : "")} />
                                 </button>
                                 <div
                                     className={cn(
-                                        "px-6 text-sm text-gray-400 overflow-hidden transition-all duration-300 leading-relaxed max-w-3xl",
+                                        "px-6 text-sm text-zinc-600 overflow-hidden transition-all duration-300 leading-relaxed max-w-3xl",
                                         openFaqIndex === i ? "max-h-40 pb-7 opacity-100" : "max-h-0 opacity-0"
                                     )}
                                 >
@@ -296,25 +297,25 @@ export default function PricingPage() {
             </main>
 
             {/* Footer */}
-            <footer className="relative z-10 border-t border-white/5 bg-zinc-950 mt-auto">
+            <footer className="relative z-10 border-t border-zinc-200/60 bg-zinc-50/50 mt-auto">
                 <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                         <div className="md:col-span-1">
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center">
+                                <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center shadow-orange-sm">
                                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                                     </svg>
                                 </div>
-                                <span className="text-base font-semibold text-white tracking-tight">NebulaNow</span>
+                                <span className="text-base font-bold text-zinc-900 tracking-tight">NebulaNow</span>
                             </div>
                             <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
                                 The unified infrastructure layer for the decentralized web.
                             </p>
                         </div>
                     </div>
-                    <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <p className="text-sm text-zinc-600">Copyright © NebulaNow</p>
+                    <div className="mt-12 pt-8 border-t border-zinc-200/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p className="text-sm text-zinc-500">Copyright © NebulaNow</p>
                     </div>
                 </div>
             </footer>

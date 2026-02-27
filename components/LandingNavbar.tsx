@@ -16,8 +16,8 @@ export default function LandingNavbar() {
 
     return (
         <>
-            {/* Desktop: Floating pill navbar — exact reference structure */}
-            <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-[100] mt-6 w-max hidden md:flex items-center gap-8 py-2 px-3 rounded-full border border-white/5 bg-white/5 backdrop-blur-md">
+            {/* Desktop: Floating pill navbar — increased visibility, larger size */}
+            <nav className="fixed top-0 left-1/2 -translate-x-1/2 z-[100] mt-8 w-max hidden md:flex items-center gap-10 py-3.5 px-6 rounded-full border border-zinc-200/80 bg-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.05)] backdrop-blur-xl transition-all duration-300">
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 pl-2">
@@ -26,15 +26,15 @@ export default function LandingNavbar() {
                             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                         </svg>
                     </div>
-                    <span className="text-sm font-medium text-white tracking-tight">Nebula</span>
+                    <span className="text-sm font-bold text-zinc-900 tracking-tight">Nebula</span>
                 </Link>
 
-                {/* Nav links — exact: text-xs font-medium text-gray-400 hover:text-white */}
+                {/* Nav links */}
                 {NAV_LINKS.map(({ label, href }) => (
                     <Link
                         key={label}
                         href={href}
-                        className="text-xs font-medium text-gray-400 hover:text-white transition-colors tracking-wide"
+                        className="text-sm font-semibold text-zinc-600 hover:text-zinc-900 transition-colors tracking-wide"
                     >
                         {label}
                     </Link>
@@ -43,26 +43,26 @@ export default function LandingNavbar() {
                 {/* Sign in */}
                 <Link
                     href="#"
-                    className="text-xs font-medium text-gray-400 hover:text-white transition-colors tracking-wide pl-2"
+                    className="text-sm font-semibold text-zinc-600 hover:text-zinc-900 transition-colors tracking-wide pl-2"
                 >
                     Sign in
                 </Link>
 
-                {/* Request Demo — exact reference: rounded-full with glow border effect */}
+                {/* Request Demo */}
                 <Link
                     href="/pricing"
-                    className="group inline-flex overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] rounded-full relative items-center justify-center"
+                    className="group inline-flex overflow-hidden transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] rounded-full relative items-center justify-center p-[2px]"
                 >
                     {/* Gradient border glow */}
-                    <span className="absolute inset-0 rounded-full bg-gradient-to-br from-white/30 via-white/10 to-white/5" />
-                    <span className="relative z-10 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-zinc-900 text-xs font-semibold text-white tracking-wide m-[1px]">
+                    <span className="absolute inset-0 rounded-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 animate-gradient-xy" />
+                    <span className="relative z-10 inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-sm font-bold text-zinc-900 tracking-wide transition-colors group-hover:bg-transparent group-hover:text-white">
                         Request Demo
                     </span>
                 </Link>
             </nav>
 
             {/* Mobile navbar */}
-            <header className="md:hidden fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-zinc-950/90 backdrop-blur-xl">
+            <header className="md:hidden fixed top-0 left-0 right-0 z-50 border-b border-zinc-200/80 bg-white/90 backdrop-blur-xl">
                 <div className="flex items-center justify-between px-6 py-4">
                     <Link href="/" className="flex items-center gap-2">
                         <div className="w-7 h-7 rounded-lg bg-orange-500 flex items-center justify-center">
@@ -70,10 +70,10 @@ export default function LandingNavbar() {
                                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                             </svg>
                         </div>
-                        <span className="text-base font-semibold text-white">Nebula</span>
+                        <span className="text-base font-bold text-zinc-900">Nebula</span>
                     </Link>
                     <button
-                        className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/[0.04] transition-colors"
+                        className="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
                         onClick={() => setMobileOpen(!mobileOpen)}
                     >
                         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -81,24 +81,24 @@ export default function LandingNavbar() {
                 </div>
 
                 {mobileOpen && (
-                    <div className="border-t border-white/5 bg-zinc-950 px-6 py-4 space-y-2">
+                    <div className="border-t border-zinc-200/80 bg-white px-6 py-4 space-y-2 shadow-lg">
                         {NAV_LINKS.map(({ label, href }) => (
                             <Link
                                 key={label}
                                 href={href}
-                                className="block px-3 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/[0.04] transition-colors"
+                                className="block px-3 py-3 rounded-xl text-base font-semibold text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 {label}
                             </Link>
                         ))}
-                        <div className="pt-4 border-t border-white/5 mt-4 flex flex-col gap-3">
-                            <Link href="#" className="flex justify-center py-3 text-base font-medium text-gray-300 hover:text-white transition-colors">
+                        <div className="pt-4 border-t border-zinc-200/80 mt-4 flex flex-col gap-3">
+                            <Link href="#" className="flex justify-center py-3 text-base font-semibold text-zinc-600 hover:text-zinc-900 transition-colors">
                                 Sign in
                             </Link>
                             <Link
                                 href="/pricing"
-                                className="inline-flex items-center justify-center py-3.5 px-6 rounded-full bg-white text-black text-sm font-bold uppercase tracking-widest hover:bg-zinc-100 transition-all"
+                                className="inline-flex items-center justify-center py-3.5 px-6 rounded-full bg-zinc-900 text-white text-sm font-bold uppercase tracking-widest hover:bg-zinc-800 transition-all"
                                 onClick={() => setMobileOpen(false)}
                             >
                                 Request Demo

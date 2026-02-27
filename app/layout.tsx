@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="bg-[#09090b] text-white antialiased font-sans">
+      <body className="bg-white text-zinc-900 antialiased font-sans">
         <Web3Provider>
           {children}
         </Web3Provider>
